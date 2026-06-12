@@ -8,7 +8,12 @@
 
 ## Tasks:
 - [x] Remove conflicting `[...slug].astro` route
-- [ ] Fix PostCard to fallback to `heroImage` when `thumbnail` is missing
-- [ ] Update all blog posts with proper frontmatter (thumbnail, category, tags, etc.)
-- [ ] Verify Sidebar and RightPanel render correctly in Layout
-- [ ] Test build and verify all components render
+- [x] Fix PostCard to fallback to `heroImage` when `thumbnail` is missing
+- [x] Update all blog posts with proper frontmatter (thumbnail, category, tags, etc.)
+- [x] Verify Sidebar and RightPanel render correctly in Layout
+- [x] Test build and verify all components render
+- [x] Deploy to GitHub Pages
+- [x] Add missing pages: About, Blog index, Tag filter
+
+## Status: ✅ COMPLETE
+Blog live at: https://riskipriyadi.github.io/sinibaca-v2/

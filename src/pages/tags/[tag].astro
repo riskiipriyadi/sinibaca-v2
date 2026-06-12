@@ -1,0 +1,68 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostCard from "../../components/PostCard.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const tagSet = new Set<string>();
+  posts.forEach((post) => {
+    (post.data.tags || []).forEach((tag) => tagSet.add(tag));
+  });
+  return Array.from(tagSet).map((tag) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const filteredPosts = allPosts
+  .filter((post) => (post.data.tags || []).includes(tag))
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+---
+
+<Layout title={`Tag: #${tag} — sinibaca`} description={`Artikel dengan tag #${tag}`}>
+  <div class="tag-header">
+    <h1 class="page-title">Tag: <span class="tag-name">#{tag}</span></h1>
+    <p class="page-subtitle">{filteredPosts.length} artikel ditemukan</p>
+  </div>
+  <div class="posts-grid">
+    {filteredPosts.map((post, index) => (
+      <div class="post-animate" style={`animation-delay: ${index * 80}ms`}>
+        <PostCard post={post} />
+      </div>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .tag-header {
+    margin-bottom: 32px;
+  }
+  .page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .tag-name {
+    color: var(--accent);
+  }
+  .page-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  .posts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .post-animate {
+    opacity: 0;
+    animation: fadeSlideUp 0.5s ease forwards;
+  }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
