@@ -1,32 +1,31 @@
 ---
-import { type CollectionEntry, getCollection, getEntry, render } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
   return posts.map((post) => ({
-    params: { slug: post.slug || post.id.split('/').pop()?.replace('.md', '').replace('.mdx', '') },
-    props: { id: post.id },
+    params: { slug: post.slug },
+    props: { post },
   }));
 }
 
 interface Props {
-  id: string;
+  post: CollectionEntry<"blog">;
 }
 
-const { id } = Astro.props;
-const post = await getEntry("blog", id);
+const { post } = Astro.props;
 const { Content } = await render(post);
 
+const base = import.meta.env.BASE_URL;
+
 function getImageUrl(thumbnail?: string, heroImage?: string): string {
-  const placeholder = "/images/placeholder.jpg";
-  if (thumbnail && typeof thumbnail === "string" && (thumbnail.startsWith("http") || thumbnail.startsWith("/"))) {
-    return thumbnail;
-  }
-  if (heroImage && typeof heroImage === "string" && (heroImage.startsWith("http") || heroImage.startsWith("/"))) {
-    return heroImage;
-  }
-  return placeholder;
+  const placeholder = `${base}images/placeholder.jpg`;
+  const src = thumbnail || heroImage;
+  if (!src) return placeholder;
+  if (src.startsWith("http")) return src;
+  if (src.startsWith("/")) return base + src.slice(1);
+  return base + src;
 }
 
 const imageUrl = getImageUrl(post.data.thumbnail, post.data.heroImage);
@@ -52,7 +51,7 @@ const dateStr = post.data.pubDate.toLocaleDateString("id-ID", {
         ))}
       </div>
     </header>
-    <img src={imageUrl} alt={post.data.title} class="hero-image" onerror="this.src='/images/placeholder.jpg'" />
+    <img src={imageUrl} alt={post.data.title} class="hero-image" onerror={`this.src='${base}images/placeholder.jpg'`} />
     <div class="post-content">
       <Content />
     </div>
