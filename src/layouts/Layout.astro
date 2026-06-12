@@ -70,39 +70,35 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
       <p>&copy; 2026 sinibaca. Built with Astro & Tailwind.</p>
     </footer>
     <style>
-      /* Layout: sidebars pushed to edges, content centered */
+      /* Layout: 3 kolom simetris, main content melebar */
       .page-wrapper {
         display: grid;
-        grid-template-columns: 1fr minmax(0, 800px) 1fr;
-        gap: 48px;
-        padding: 80px 32px 40px;
+        grid-template-columns: 260px 1fr 260px;
+        gap: 32px;
+        padding: 80px 24px 40px;
         min-height: calc(100vh - 120px);
       }
 
-      /* Left sidebar: stick to LEFT edge of its column */
+      /* Left sidebar: isi penuh cell grid */
       .sidebar-left {
-        width: 260px;
-        justify-self: start;
+        width: 100%;
         position: sticky;
         top: 80px;
         height: fit-content;
-        padding-left: 8px;
       }
 
-      /* Main content: stays centered */
+      /* Main content: melebar mengisi sisa ruang */
       .main-content {
         width: 100%;
         min-width: 0;
       }
 
-      /* Right sidebar: stick to RIGHT edge of its column */
+      /* Right sidebar: isi penuh cell grid */
       .sidebar-right {
-        width: 280px;
-        justify-self: end;
+        width: 100%;
         position: sticky;
         top: 80px;
         height: fit-content;
-        padding-right: 8px;
       }
 
       .site-footer {
@@ -122,10 +118,6 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
           gap: 32px;
         }
         .sidebar-right { display: none; }
-        .sidebar-left {
-          justify-self: start;
-          padding-left: 0;
-        }
       }
 
       /* Small screens: hide left sidebar, show hamburger */
@@ -147,7 +139,6 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
           border-right: 1px solid var(--border);
           padding: 20px;
           overflow-y: auto;
-          justify-self: start;
         }
         .sidebar-left.mobile-open {
           display: block;

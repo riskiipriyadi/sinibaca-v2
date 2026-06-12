@@ -22,7 +22,7 @@
   --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.08);
   --border-gradient: linear-gradient(135deg, #6366f1, #a5b4fc, #6366f1);
   --sidebar-width: 260px;
-  --right-panel-width: 280px;
+  --right-panel-width: 260px;
 }
 
 .dark {
