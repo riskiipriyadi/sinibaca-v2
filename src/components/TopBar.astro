@@ -1,9 +1,22 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a href="/" class="logo">sinibaca</a>
+    <a href={`${base}/`} class="logo">
+      <img src={`${base}/favicons/favicon-32x32.png`} alt="sinibaca" class="logo-img" width="28" height="28" />
+      <span class="logo-text">sinibaca</span>
+    </a>
+
+    <div class="search-bar">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" placeholder="Cari artikel..." class="search-input" id="search-input" />
+    </div>
+
     <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="3" y1="6" x2="21" y2="6"/>
@@ -34,6 +47,7 @@
     background: rgba(255, 255, 255, 0.8);
     border-bottom: 1px solid var(--border);
     height: 60px;
+    transition: background 0.3s ease;
   }
   html[data-mode="dark"] .topbar {
     background: rgba(10, 10, 10, 0.8);
@@ -46,13 +60,56 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 24px;
   }
   .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .logo-img {
+    border-radius: 6px;
+    display: block;
+  }
+  .logo-text {
     font-size: 1.25rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    text-decoration: none;
+  }
+  .search-bar {
+    flex: 1;
+    max-width: 400px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--text-light);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .search-input {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
     color: var(--text);
+    font-size: 0.875rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .search-input:focus {
+    border-color: var(--accent);
+    background: var(--bg);
+  }
+  .search-input::placeholder {
+    color: var(--text-light);
   }
   .menu-toggle {
     display: none;
@@ -68,5 +125,9 @@
   }
   @media (max-width: 900px) {
     .menu-toggle { display: block; }
+    .search-bar { display: none; }
+  }
+  @media (max-width: 1200px) {
+    .search-bar { max-width: 300px; }
   }
 </style>

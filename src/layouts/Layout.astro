@@ -45,8 +45,11 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
         --text: #0f172a;
         --text-muted: #64748b;
         --text-light: #94a3b8;
-        --border: #f1f5f9;
+        --border: #e2e8f0;
         --accent: #6366f1;
+        --hover: #f1f5f9;
+        --card-bg: #ffffff;
+        transition: background 0.3s ease, color 0.3s ease;
       }
       html[data-mode="dark"] {
         --bg: #0a0a0a;
@@ -56,6 +59,8 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
         --text-light: #64748b;
         --border: #1e1e1e;
         --accent: #818cf8;
+        --hover: #1a1a1a;
+        --card-bg: #141414;
       }
       html {
         scroll-behavior: smooth;
@@ -86,7 +91,7 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
       </aside>
     </div>
     <footer class="site-footer">
-      <p>&copy; 2026 sinibaca. Built with Astro & Tailwind.</p>
+      <p>&copy; 2026 sinibaca. Dibangun dengan waktu.</p>
     </footer>
     <style>
       .page-wrapper {
