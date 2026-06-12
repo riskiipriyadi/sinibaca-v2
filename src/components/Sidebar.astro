@@ -1,5 +1,6 @@
 ﻿---
 import { getCollection } from "astro:content";
+import avatarImg from "../assets/avatar.png";
 
 const allPosts = await getCollection("blog", ({ data }) => !data.draft);
 
@@ -32,7 +33,7 @@ const socials = [
   <!-- Profile -->
   <div class="profile-card">
     <img
-      src="/avatar.png"
+      src={avatarImg.src}
       alt="sinibaca"
       class="avatar"
       width="72"
