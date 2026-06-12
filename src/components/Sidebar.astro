@@ -1,0 +1,159 @@
+---
+const navItems = [
+  { label: "Beranda", href: "/" },
+  { label: "Blog", href: "/blog" },
+  { label: "Tentang", href: "/about" },
+];
+
+const socials = [
+  { label: "GitHub", href: "https://github.com" },
+  { label: "Twitter", href: "https://twitter.com" },
+];
+---
+
+<div class="sidebar">
+  <div class="profile">
+    <div class="avatar-wrap">
+      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=sinibaca" alt="Avatar" class="avatar" />
+    </div>
+    <h3 class="name">sinibaca</h3>
+    <p class="bio">Blog modern dengan Astro & Tailwind</p>
+  </div>
+
+  <nav class="nav">
+    {navItems.map((item, i) => (
+      <a href={item.href} class="nav-item" style={`animation-delay: ${i * 50}ms`}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+
+  <div class="socials">
+    {socials.map((s) => (
+      <a href={s.href} target="_blank" rel="noopener" class="social-link">{s.label}</a>
+    ))}
+  </div>
+
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+    </svg>
+    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const toggle = document.getElementById("theme-toggle");
+  const html = document.documentElement;
+  toggle?.addEventListener("click", () => {
+    const current = html.getAttribute("data-mode");
+    const next = current === "dark" ? "light" : "dark";
+    html.setAttribute("data-mode", next);
+    localStorage.setItem("theme", next);
+  });
+  const saved = localStorage.getItem("theme");
+  if (saved) html.setAttribute("data-mode", saved);
+</script>
+
+<style>
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .profile {
+    text-align: center;
+  }
+  .avatar-wrap {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    transition: transform 0.3s ease;
+  }
+  .avatar-wrap:hover {
+    transform: rotate(5deg) scale(1.02);
+  }
+  .avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--bg);
+  }
+  .name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--text);
+  }
+  .bio {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .nav-item {
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.15s ease;
+    opacity: 0;
+    animation: slideIn 0.4s ease forwards;
+  }
+  .nav-item:hover {
+    background: var(--bg-secondary);
+    color: var(--text);
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .socials {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .social-link {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .social-link:hover {
+    color: var(--accent);
+  }
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+  .theme-toggle:hover {
+    border-color: var(--accent);
+  }
+  html[data-mode="dark"] .icon-sun { display: none; }
+  html[data-mode="light"] .icon-moon { display: none; }
+</style>

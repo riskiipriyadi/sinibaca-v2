@@ -1,0 +1,72 @@
+---
+---
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="logo">sinibaca</a>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const sidebar = document.querySelector(".sidebar-left");
+  toggle?.addEventListener("click", () => {
+    sidebar?.classList.toggle("mobile-open");
+  });
+</script>
+
+<style>
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--border);
+    height: 60px;
+  }
+  html[data-mode="dark"] .topbar {
+    background: rgba(10, 10, 10, 0.8);
+  }
+  .topbar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .menu-toggle:hover {
+    background: var(--bg-secondary);
+  }
+  @media (max-width: 900px) {
+    .menu-toggle { display: block; }
+  }
+</style>

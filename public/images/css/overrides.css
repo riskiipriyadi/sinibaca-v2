@@ -1,0 +1,123 @@
+.preview-img {
+  aspect-ratio: auto;
+  height: auto;
+}
+
+#post-list .card-body {
+  height: auto;
+}
+
+#post-list .card-body .post-meta {
+  flex-grow: 0 !important;
+}
+
+#post-list .col-md-5 img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Fix post card: gambar mengikuti tinggi teks, bukan sebaliknya */
+#post-list .card {
+  align-items: stretch;
+}
+
+#post-list .card .col-md-auto {
+  width: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+#post-list .card .col-md-auto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Additional spacing for Giscus badge */
+.giscus-badge {
+  margin-bottom: 1rem;
+}
+
+/* Ensure Cusdis iframe expands fully without scroll */
+#cusdis_thread iframe {
+  height: auto !important;
+  min-height: 500px;
+  overflow: visible !important;
+}
+
+/* Comment system switcher */
+#comment-switcher {
+  margin-top: 3rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.comment-switcher-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.comment-switch-btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.comment-switch-btn:hover {
+  background: var(--sidebar-bg);
+  border-color: var(--main-border-color);
+}
+
+.comment-switch-btn.active {
+  background: var(--sidebar-active-bg, var(--sidebar-bg));
+  border-color: var(--main-link-color, #2a7ae2);
+  color: var(--main-link-color, #2a7ae2);
+  font-weight: 500;
+}
+
+/* Warm theme overrides */
+[data-mode='warm'] {
+  --main-bg: #FBF0D9;
+  --body-bg: #FBF0D9;
+  --text-color: #5F4B32;
+  --sidebar-bg: #F2E4C4;
+  --link-color: #8B5E3C;
+  --border-color: #E0CFA8;
+}
+
+body.warm-mode,body.warm-mode #main,body.warm-mode #core-wrapper,body.warm-mode .content,body.warm-mode article{background-color:#FBF0D9!important;color:#5F4B32!important;}
+body.warm-mode #sidebar,body.warm-mode #sidebar *{background-color:#F2E4C4!important;color:#5F4B32!important;}
+body.warm-mode #topbar,body.warm-mode #topbar-wrapper,body.warm-mode footer,body.warm-mode .card{background-color:#FBF0D9!important;border-color:#E0CFA8!important;}
+body.warm-mode a{color:#8B5E3C!important;}
+
+
+
+/* Warm mode post card fixes */
+body.warm-mode .card, body.warm-mode .card-body, body.warm-mode .card-text, body.warm-mode .post-preview, body.warm-mode .post-preview *, body.warm-mode h1, body.warm-mode h2, body.warm-mode h3, body.warm-mode h4, body.warm-mode h5, body.warm-mode p, body.warm-mode span, body.warm-mode li, body.warm-mode .categories, body.warm-mode .tag-list { background-color: #FBF0D9 !important; color: #5F4B32 !important; border-color: #E0CFA8 !important; }
+body.warm-mode .card img, body.warm-mode img { filter: none !important; }
+body.warm-mode input, body.warm-mode input::placeholder { background-color: #F2E4C4 !important; color: #5F4B32 !important; }
+
+
+#toc-wrapper::before { display: none !important; }
+#toc-wrapper::after { display: none !important; }
+
+
+#panel-wrapper .toc-border-cover { display: none !important; height: 0 !important; margin: 0 !important; }
+#toc-wrapper { margin-top: 2rem !important; }
+
+body.warm-mode search, body.warm-mode #search-input { background-color: #F2E4C4 !important; border-color: #E0CFA8 !important; color: #5F4B32 !important; }
+
+
+
+
+#warm-toggle { width: 1.75rem !important; height: 1.75rem !important; display: flex !important; align-items: center !important; justify-content: center !important; border-radius: 50% !important; background-color: var(--sidebar-btn-bg) !important; box-shadow: var(--sidebar-border-color) 0 0 0 1px !important; margin-bottom: 0.5rem !important; padding: 0 !important; opacity: 0.75; }
+#warm-toggle:hover { opacity: 1; background-color: var(--sidebar-hover-bg) !important; }
+#warm-toggle i { font-size: 95% !important; opacity: 0.8; }

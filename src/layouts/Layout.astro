@@ -1,0 +1,124 @@
+---
+import Sidebar from "../components/Sidebar.astro";
+import RightPanel from "../components/RightPanel.astro";
+import TopBar from "../components/TopBar.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="id" data-mode="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style is:global>
+      :root {
+        --bg: #ffffff;
+        --bg-secondary: #f8fafc;
+        --text: #0f172a;
+        --text-muted: #64748b;
+        --text-light: #94a3b8;
+        --border: #f1f5f9;
+        --accent: #6366f1;
+      }
+      html[data-mode="dark"] {
+        --bg: #0a0a0a;
+        --bg-secondary: #141414;
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+        --text-light: #64748b;
+        --border: #1e1e1e;
+        --accent: #818cf8;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <TopBar />
+    <div class="page-container">
+      <aside class="sidebar-left">
+        <Sidebar />
+      </aside>
+      <main class="main-content">
+        <slot />
+      </main>
+      <aside class="sidebar-right">
+        <RightPanel />
+      </aside>
+    </div>
+    <footer class="site-footer">
+      <p>&copy; 2026 sinibaca. Built with Astro & Tailwind.</p>
+    </footer>
+    <style>
+      .page-container {
+        display: flex;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 80px 24px 40px;
+        gap: 32px;
+        min-height: calc(100vh - 120px);
+      }
+      .sidebar-left {
+        width: 260px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 80px;
+        height: fit-content;
+      }
+      .main-content {
+        flex: 1;
+        max-width: 800px;
+        min-width: 0;
+      }
+      .sidebar-right {
+        width: 280px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 80px;
+        height: fit-content;
+      }
+      .site-footer {
+        width: 100%;
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border);
+        text-align: center;
+        padding: 24px;
+        color: var(--text-light);
+        font-size: 0.875rem;
+      }
+      @media (max-width: 1200px) {
+        .sidebar-right { display: none; }
+      }
+      @media (max-width: 900px) {
+        .page-container { flex-direction: column; padding-top: 60px; }
+        .sidebar-left { 
+          width: 100%; 
+          position: static; 
+          display: none;
+        }
+        .sidebar-left.mobile-open { display: block; }
+        .main-content { max-width: 100%; }
+      }
+    </style>
+  </body>
+</html>

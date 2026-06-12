@@ -1,0 +1,145 @@
+---
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+
+const recentlyUpdated = [...allPosts]
+  .sort((a, b) => {
+    const dateA = a.data.updatedDate || a.data.pubDate;
+    const dateB = b.data.updatedDate || b.data.pubDate;
+    return new Date(dateB).getTime() - new Date(dateA).getTime();
+  })
+  .slice(0, 5);
+
+const tagCounts: Record<string, number> = {};
+allPosts.forEach((post) => {
+  (post.data.tags || []).forEach((tag) => {
+    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+  });
+});
+
+const popularTags = Object.entries(tagCounts)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 10)
+  .map(([tag, count]) => ({ tag, count }));
+---
+
+<div class="right-panel">
+  <section class="panel-section">
+    <h3 class="panel-heading">Baru Diperbarui</h3>
+    <div class="post-list">
+      {recentlyUpdated.map((post) => (
+        <a href={`/blog/${post.slug}`} class="post-item">
+          <span class="post-title">{post.data.title}</span>
+          <span class="post-date">
+            {(post.data.updatedDate || post.data.pubDate).toLocaleDateString("id-ID", {
+              month: "short", day: "numeric",
+            })}
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="panel-section">
+    <h3 class="panel-heading">Tag Populer</h3>
+    <div class="tag-cloud">
+      {popularTags.map(({ tag, count }) => (
+        <a href={`/tags/${tag}`} class="tag-link">
+          {tag}
+          <span class="tag-count">{count}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</div>
+
+<style>
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .panel-section {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .panel-heading {
+    font-size: 0.875rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin: 0 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    text-decoration: none;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.15s ease;
+  }
+  .post-item:last-child {
+    border-bottom: none;
+  }
+  .post-item:hover .post-title {
+    color: var(--accent);
+  }
+  .post-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    flex: 1;
+  }
+  .post-date {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .tag-link:hover {
+    background: var(--accent);
+    color: white;
+    transform: scale(1.05);
+  }
+  .tag-count {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: var(--border);
+    color: var(--text-light);
+  }
+  .tag-link:hover .tag-count {
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
+</style>

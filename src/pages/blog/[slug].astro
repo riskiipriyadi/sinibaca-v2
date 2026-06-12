@@ -1,0 +1,179 @@
+---
+import { type CollectionEntry, getCollection, getEntry, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug || post.id.split('/').pop()?.replace('.md', '').replace('.mdx', '') },
+    props: { id: post.id },
+  }));
+}
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const post = await getEntry("blog", id);
+const { Content } = await render(post);
+
+function getImageUrl(thumbnail?: string, heroImage?: string): string {
+  const placeholder = "/images/placeholder.jpg";
+  if (thumbnail && typeof thumbnail === "string" && (thumbnail.startsWith("http") || thumbnail.startsWith("/"))) {
+    return thumbnail;
+  }
+  if (heroImage && typeof heroImage === "string" && (heroImage.startsWith("http") || heroImage.startsWith("/"))) {
+    return heroImage;
+  }
+  return placeholder;
+}
+
+const imageUrl = getImageUrl(post.data.thumbnail, post.data.heroImage);
+const dateStr = post.data.pubDate.toLocaleDateString("id-ID", {
+  year: "numeric", month: "long", day: "numeric"
+});
+---
+
+<Layout title={post.data.title} description={post.data.description || ""}>
+  <article class="blog-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="category">{post.data.category || "Uncategorized"}</span>
+        <span class="date">{dateStr}</span>
+      </div>
+      <h1 class="post-title">{post.data.title}</h1>
+      {post.data.description && (
+        <p class="post-description">{post.data.description}</p>
+      )}
+      <div class="post-tags">
+        {(post.data.tags || []).map((tag) => (
+          <span class="tag">#{tag}</span>
+        ))}
+      </div>
+    </header>
+    <img src={imageUrl} alt={post.data.title} class="hero-image" onerror="this.src='/images/placeholder.jpg'" />
+    <div class="post-content">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .blog-post {
+    animation: fadeInUp 0.5s ease;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .post-header {
+    margin-bottom: 32px;
+  }
+  .post-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 16px;
+  }
+  .category {
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .post-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+  .post-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 20px;
+  }
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .tag {
+    font-size: 0.875rem;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+  }
+  .hero-image {
+    width: 100%;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+  .post-content {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .post-content :global(h2) {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .post-content :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 12px;
+  }
+  .post-content :global(p) {
+    margin-bottom: 20px;
+  }
+  .post-content :global(pre) {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+  }
+  .post-content :global(code) {
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 0.9em;
+  }
+  .post-content :global(img) {
+    border-radius: 12px;
+    max-width: 100%;
+    height: auto;
+  }
+  .post-content :global(blockquote) {
+    border-left: 4px solid var(--accent);
+    padding-left: 20px;
+    margin-left: 0;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .post-content :global(ul), .post-content :global(ol) {
+    padding-left: 24px;
+    margin-bottom: 20px;
+  }
+  .post-content :global(li) {
+    margin-bottom: 8px;
+  }
+  .post-content :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .post-content :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+</style>
