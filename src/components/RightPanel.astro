@@ -22,6 +22,8 @@ const popularTags = Object.entries(tagCounts)
   .sort((a, b) => b[1] - a[1])
   .slice(0, 10)
   .map(([tag, count]) => ({ tag, count }));
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <div class="right-panel">
@@ -29,7 +31,7 @@ const popularTags = Object.entries(tagCounts)
     <h3 class="panel-heading">Baru Diperbarui</h3>
     <div class="post-list">
       {recentlyUpdated.map((post) => (
-        <a href={`/blog/${post.slug}`} class="post-item">
+        <a href={`${base}blog/${post.slug}`} class="post-item">
           <span class="post-title">{post.data.title}</span>
           <span class="post-date">
             {(post.data.updatedDate || post.data.pubDate).toLocaleDateString("id-ID", {
@@ -45,7 +47,7 @@ const popularTags = Object.entries(tagCounts)
     <h3 class="panel-heading">Tag Populer</h3>
     <div class="tag-cloud">
       {popularTags.map(({ tag, count }) => (
-        <a href={`/tags/${tag}`} class="tag-link">
+        <a href={`${base}tags/${tag}`} class="tag-link">
           {tag}
           <span class="tag-count">{count}</span>
         </a>

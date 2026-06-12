@@ -11,6 +11,8 @@ allPosts.forEach((post) => {
 });
 const categories = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]);
 
+const base = import.meta.env.BASE_URL;
+
 const navItems = [
   { label: "Beranda", href: "/" },
   { label: "Tentang", href: "/about" },
@@ -49,7 +51,7 @@ const socials = [
     <h4 class="section-title">Kategori</h4>
     <div class="cat-list">
       {categories.map(([cat, count]) => (
-        <a href="/blog" class="cat-item">
+        <a href={`${base}blog`} class="cat-item">
           <span>{cat}</span>
           <span class="badge">{count}</span>
         </a>
