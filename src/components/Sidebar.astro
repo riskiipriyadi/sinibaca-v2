@@ -31,7 +31,7 @@ const socials = [
 <div class="sidebar">
   <div class="profile-card">
     <div class="avatar-wrap">
-      <div class="avatar-ring avatar-ring--wave"></div>
+      <div class="about-avatar-ring"></div>
       <img src={avatarImg.src} alt="sinibaca" class="avatar" width="72" height="72" />
     </div>
     <h3 class="name">sinibaca</h3>
@@ -98,7 +98,7 @@ const socials = [
   .profile-card { background: var(--card-bg, #f9f9f9); border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 1.25rem; text-align: center; }
   
   /* ============================================
-     AVATAR WRAPPER — base positioning
+     AVATAR WRAPPER — anchor untuk absolute ring
      ============================================ */
   .avatar-wrap {
     position: relative;
@@ -120,115 +120,26 @@ const socials = [
   }
 
   /* ============================================
-     BASE — Dashed Diamond Ring
+     BLOB SPIN RING — dashed organik berputar
      ============================================ */
-  .avatar-ring {
+  .about-avatar-ring {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 88px;
-    height: 88px;
-    border: 2px dashed #a5d8ff;
-    border-radius: 14px;
-    transform: translate(-50%, -50%) rotate(45deg);
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 2px dashed #0969da;
+    opacity: 0.35;
+    animation: blob-spin 8s ease-in-out infinite;
     z-index: 1;
-    pointer-events: none;
-    opacity: 0.75;
   }
 
-  /* ============================================
-     VARIASI 1: Dashed Wave (default)
-     Berputar + bergelombang (scale + border-radius morph)
-     ============================================ */
-  .avatar-ring--wave {
-    animation: dashedWave 10s linear infinite;
-  }
-
-  @keyframes dashedWave {
-    0% {
-      transform: translate(-50%, -50%) rotate(45deg) scale(1);
-      border-radius: 14px;
-      opacity: 0.75;
-    }
-    25% {
-      transform: translate(-50%, -50%) rotate(135deg) scale(1.06);
-      border-radius: 26px;
-      opacity: 0.5;
-    }
-    50% {
-      transform: translate(-50%, -50%) rotate(225deg) scale(1);
-      border-radius: 14px;
-      opacity: 0.75;
-    }
-    75% {
-      transform: translate(-50%, -50%) rotate(315deg) scale(1.06);
-      border-radius: 26px;
-      opacity: 0.5;
-    }
-    100% {
-      transform: translate(-50%, -50%) rotate(405deg) scale(1);
-      border-radius: 14px;
-      opacity: 0.75;
-    }
-  }
-
-  /* ============================================
-     VARIASI 2: Dual Dashed Counter
-     2 ring putus-putus berputar berlawanan arah
-     Tambahkan sibling di HTML:
-       <div class="avatar-ring avatar-ring--counter"></div>
-       <div class="avatar-ring-outer"></div>
-     ============================================ */
-  .avatar-ring--counter {
-    animation: dashedSpin 12s linear infinite;
-  }
-
-  .avatar-ring-outer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100px;
-    height: 100px;
-    border: 1.5px dashed rgba(165, 216, 255, 0.5);
-    border-radius: 18px;
-    transform: translate(-50%, -50%) rotate(45deg);
-    z-index: 0;
-    pointer-events: none;
-    animation: dashedSpinReverse 12s linear infinite;
-  }
-
-  @keyframes dashedSpin {
-    from { transform: translate(-50%, -50%) rotate(45deg); }
-    to   { transform: translate(-50%, -50%) rotate(405deg); }
-  }
-
-  @keyframes dashedSpinReverse {
-    from { transform: translate(-50%, -50%) rotate(45deg); }
-    to   { transform: translate(-50%, -50%) rotate(-315deg); }
-  }
-
-  /* ============================================
-     VARIASI 3: Dashed Breathe
-     Berputar lambat + napas halus (scale + opacity)
-     Ganti class: avatar-ring--breathe
-     ============================================ */
-  .avatar-ring--breathe {
-    animation: dashedBreathe 20s ease-in-out infinite;
-  }
-
-  @keyframes dashedBreathe {
-    0%, 100% {
-      transform: translate(-50%, -50%) rotate(45deg) scale(1);
-      border-radius: 14px;
-      opacity: 0.4;
-      border-width: 2px;
-    }
-    50% {
-      transform: translate(-50%, -50%) rotate(225deg) scale(1.12);
-      border-radius: 22px;
-      opacity: 0.85;
-      border-width: 3px;
-    }
+  @keyframes blob-spin {
+    0%   { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; transform: rotate(0deg); }
+    25%  { border-radius: 40% 60% 45% 55% / 60% 40% 55% 45%; transform: rotate(90deg); }
+    50%  { border-radius: 55% 45% 60% 40% / 45% 55% 50% 60%; transform: rotate(180deg); }
+    75%  { border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; transform: rotate(270deg); }
+    100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; transform: rotate(360deg); }
   }
 
   .name { font-size: 1rem; font-weight: 700; margin: 0 0 0.25rem; }
