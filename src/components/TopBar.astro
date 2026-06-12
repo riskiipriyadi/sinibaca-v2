@@ -46,7 +46,7 @@ const postsData = posts.map(p => ({
     sidebar?.classList.toggle("mobile-open");
   });
 
-  // Real-time search with debounce
+  // Real-time search
   const searchBar = document.querySelector('.search-bar');
   const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
   const searchDropdown = document.getElementById('search-dropdown') as HTMLElement | null;
@@ -71,11 +71,11 @@ const postsData = posts.map(p => ({
       if (results.length === 0) {
         searchDropdown.innerHTML = `
           <div class="search-empty">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;opacity:0.4;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.35;margin-bottom:8px;">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <div>Tidak ada hasil untuk "<strong style="color:var(--text,#0f172a);font-weight:600;">${query}</strong>"</div>
+            <div style="font-size:0.8125rem;color:var(--text-muted);">Tidak ada hasil untuk "<strong style="color:var(--text);font-weight:600;">${query}</strong>"</div>
           </div>
         `;
         return;
@@ -86,9 +86,11 @@ const postsData = posts.map(p => ({
         const hasDesc = post.description && post.description.trim().length > 0;
         return `
           <a href="${base}/blog/${post.slug}" class="search-result-item">
-            <img src="${thumb}" alt="" class="search-thumb" loading="lazy" onerror="this.src='${base}/favicons/favicon-32x32.png'" />
-            <div class="search-result-content">
-              <span class="search-category">${post.category}</span>
+            <img src="${thumb}" alt="" class="search-thumb" loading="lazy" onerror="this.style.display='none'" />
+            <div class="search-result-body">
+              <div class="search-result-meta">
+                <span class="search-category">${post.category}</span>
+              </div>
               <div class="search-title">${highlightText(post.title, query)}</div>
               ${hasDesc ? `<div class="search-desc">${highlightText(post.description, query)}</div>` : ''}
             </div>
@@ -113,8 +115,10 @@ const postsData = posts.map(p => ({
       const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
       
       if (!query) {
-        searchDropdown.innerHTML = '';
-        searchDropdown.classList.remove('active');
+        if (searchDropdown) {
+          searchDropdown.innerHTML = '';
+          searchDropdown.classList.remove('active');
+        }
         return;
       }
       
@@ -122,32 +126,31 @@ const postsData = posts.map(p => ({
         post.title.toLowerCase().includes(query) || 
         post.description.toLowerCase().includes(query) ||
         post.category.toLowerCase().includes(query)
-      ).slice(0, 8);
+      ).slice(0, 10);
       
       renderResults(results, query);
-      searchDropdown.classList.add('active');
-    }, 250);
+      if (searchDropdown) {
+        searchDropdown.classList.add('active');
+      }
+    }, 200);
     
     searchInput.addEventListener('input', handleSearch);
     
-    // Close when clicking outside
     document.addEventListener('click', (e) => {
       if (!searchBar.contains(e.target as Node)) {
-        searchDropdown.classList.remove('active');
+        searchDropdown?.classList.remove('active');
       }
     });
     
-    // Close on Escape
     searchInput.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        searchDropdown.classList.remove('active');
+        searchDropdown?.classList.remove('active');
         searchInput.blur();
       }
     });
     
-    // Re-open on focus if has value
     searchInput.addEventListener('focus', () => {
-      if (searchInput.value.trim().length > 0 && searchDropdown.innerHTML.trim().length > 0) {
+      if (searchInput.value.trim().length > 0 && searchDropdown && searchDropdown.innerHTML.trim().length > 0) {
         searchDropdown.classList.add('active');
       }
     });
@@ -235,23 +238,24 @@ const postsData = posts.map(p => ({
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
   }
   
+  /* === DROPDOWN: HUGGINGFACE STYLE === */
   .search-dropdown {
     position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    width: 100%;
-    min-width: 300px;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 420px;
+    max-width: calc(100vw - 32px);
     background: var(--bg, #ffffff);
     border: 1px solid var(--border, #e2e8f0);
     border-radius: 12px;
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
-    max-height: 400px;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
+    max-height: 420px;
     overflow-y: auto;
     overflow-x: hidden;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-4px);
-    transition: all 0.2s ease;
+    transform: translateY(-6px);
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 200;
   }
   
@@ -261,16 +265,28 @@ const postsData = posts.map(p => ({
     transform: translateY(0);
   }
   
+  .search-dropdown::-webkit-scrollbar {
+    width: 5px;
+  }
+  .search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .search-dropdown::-webkit-scrollbar-thumb {
+    background: var(--border, #e2e8f0);
+    border-radius: 3px;
+  }
+  
+  /* Result item - HuggingFace row style */
   .search-result-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
+    gap: 12px;
+    padding: 10px 14px;
     text-decoration: none !important;
-    color: inherit;
     border-bottom: 1px solid var(--border, #e2e8f0);
-    transition: background-color 0.15s ease;
+    transition: background-color 0.12s ease;
     cursor: pointer;
+    color: inherit;
   }
   
   .search-result-item:last-child {
@@ -285,58 +301,67 @@ const postsData = posts.map(p => ({
     color: var(--accent, #6366f1);
   }
   
+  /* Thumbnail: 36x36 compact rounded */
   .search-thumb {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
     border-radius: 6px;
     object-fit: cover;
-    background: var(--bg-secondary, #f8fafc);
     display: block;
+    background: var(--bg-secondary, #f8fafc);
   }
   
-  .search-result-content {
+  /* Body: flex-1 with min-width:0 is CRITICAL for text-overflow to work */
+  .search-result-body {
     flex: 1;
     min-width: 0;
     overflow: hidden;
   }
   
-  .search-category {
-    display: inline-block;
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: var(--accent, #6366f1);
-    background: rgba(99, 102, 241, 0.1);
-    padding: 1px 6px;
-    border-radius: 4px;
-    line-height: 1.4;
-    margin-bottom: 2px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+  .search-result-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 3px;
   }
   
+  .search-category {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent, #6366f1);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  
+  /* Title: single line, truncate, NO underline ever */
   .search-title {
-    font-size: 0.85rem;
+    font-size: 0.8125rem;
     font-weight: 600;
     color: var(--text, #0f172a);
-    line-height: 1.3;
-    text-decoration: none !important;
+    line-height: 1.35;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
   }
   
   .search-title mark {
-    background: rgba(99, 102, 241, 0.2);
+    background: rgba(99, 102, 241, 0.18);
     color: inherit;
     border-radius: 2px;
-    padding: 0 1px;
+    padding: 0 2px;
+    font-weight: 700;
   }
   
+  /* Description: single line muted */
   .search-desc {
     font-size: 0.75rem;
     color: var(--text-muted, #94a3b8);
-    line-height: 1.3;
+    line-height: 1.35;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -344,23 +369,23 @@ const postsData = posts.map(p => ({
   }
   
   .search-desc mark {
-    background: rgba(99, 102, 241, 0.15);
+    background: rgba(99, 102, 241, 0.12);
     color: inherit;
     border-radius: 2px;
     padding: 0 1px;
   }
   
+  /* Empty state */
   .search-empty {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 28px 16px;
-    color: var(--text-muted, #94a3b8);
-    font-size: 0.875rem;
+    padding: 32px 16px;
     text-align: center;
   }
   
+  /* Menu toggle */
   .menu-toggle {
     display: none;
     align-items: center;
@@ -390,11 +415,10 @@ const postsData = posts.map(p => ({
     
     .search-dropdown {
       position: fixed;
-      top: 64px;
+      top: 66px;
       left: 16px;
       right: 16px;
       width: auto;
-      min-width: auto;
     }
     
     .menu-toggle {
