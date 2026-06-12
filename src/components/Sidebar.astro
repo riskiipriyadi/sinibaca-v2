@@ -32,9 +32,11 @@ const socials = [
   <!-- Profile -->
   <div class="profile-card">
     <img
-      src="https://api.dicebear.com/7.x/avataaars/svg?seed=sinibaca"
+      src="/avatar.png"
       alt="sinibaca"
       class="avatar"
+      width="72"
+      height="72"
     />
     <h3 class="name">sinibaca</h3>
     <p class="bio">Blog modern dengan Astro &amp; Tailwind</p>
@@ -99,10 +101,12 @@ const socials = [
 <script>
   const toggle = document.getElementById("theme-toggle");
   const html = document.documentElement;
-  if (localStorage.getItem("theme") === "dark") html.classList.add("dark");
+  
   toggle?.addEventListener("click", () => {
-    html.classList.toggle("dark");
-    localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+    const isDark = html.getAttribute("data-mode") === "dark";
+    const newMode = isDark ? "light" : "dark";
+    html.setAttribute("data-mode", newMode);
+    localStorage.setItem("theme", newMode);
   });
 </script>
 
