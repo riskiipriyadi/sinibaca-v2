@@ -75,6 +75,23 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
         color: var(--text);
         margin: 0;
       }
+      ::selection {
+        background: rgba(99,102,241,0.2);
+        color: var(--text);
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-muted);
+      }
     </style>
   </head>
   <body>
