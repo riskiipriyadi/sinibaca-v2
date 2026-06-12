@@ -63,14 +63,16 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
         overflow-x: hidden;
       }
       body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
         background: var(--bg);
         color: var(--text);
         margin: 0;
-        min-height: 100vh;
       }
     </style>
   </head>
-  <body class={Astro.url.pathname === '/' || Astro.url.pathname === '/sinibaca-v2/' || Astro.url.pathname === '/sinibaca-v2' ? 'home-page' : ''}>
+  <body>
     <TopBar />
     <div class="page-wrapper">
       <aside class="sidebar-left">
@@ -87,25 +89,20 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
       <p>&copy; 2026 sinibaca. Built with Astro & Tailwind.</p>
     </footer>
     <style>
-      /* Layout: 3 kolom simetris, padding simetris 24px kiri & kanan */
       .page-wrapper {
         display: grid;
         grid-template-columns: 260px 1fr 260px;
         gap: 32px;
-        padding-top: 80px;
-        padding-right: 24px;
-        padding-bottom: 40px;
-        padding-left: 24px;
-        min-height: calc(100vh - 120px);
+        padding: 80px 24px 40px;
+        flex: 1;
+        min-height: 0;
       }
 
-      /* Sidebar kiri & kanan: natural height, ikut scroll halaman */
       .sidebar-left,
       .sidebar-right {
         width: 100%;
       }
 
-      /* Main content: melebar mengisi sisa ruang */
       .main-content {
         width: 100%;
         min-width: 0;
@@ -119,9 +116,9 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
         padding: 24px;
         color: var(--text-light);
         font-size: 0.875rem;
+        flex-shrink: 0;
       }
 
-      /* Medium screens: hide right sidebar */
       @media (max-width: 1200px) {
         .page-wrapper {
           grid-template-columns: 260px 1fr;
@@ -130,17 +127,6 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
         .sidebar-right { display: none; }
       }
 
-      /* Home page: compact, no scroll */
-      body.home-page .page-wrapper {
-        min-height: auto;
-        height: auto;
-        padding-bottom: 24px;
-      }
-      body.home-page .main-content {
-        overflow: hidden;
-      }
-
-      /* Small screens: hide left sidebar, show hamburger */
       @media (max-width: 900px) {
         .page-wrapper {
           grid-template-columns: 1fr;

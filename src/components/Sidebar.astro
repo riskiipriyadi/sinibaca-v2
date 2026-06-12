@@ -11,11 +11,11 @@ allPosts.forEach((post) => {
 });
 const categories = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]);
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
 
 const navItems = [
-  { label: "Beranda", href: "/" },
-  { label: "Tentang", href: "/about" },
+  { label: "Beranda", href: `${base}` },
+  { label: "Tentang", href: `${base}about` },
 ];
 
 const socials = [
