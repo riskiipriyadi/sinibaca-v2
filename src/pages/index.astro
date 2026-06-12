@@ -24,26 +24,29 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
       const thumb = post.data.thumbnail || post.data.heroImage;
       let imageUrl;
       if (!thumb) {
-        imageUrl = base + 'images/placeholder.jpg';
-      } else if (thumb.startsWith('http')) {
+        imageUrl = base + "images/placeholder.jpg";
+      } else if (thumb.startsWith("http")) {
         imageUrl = thumb;
-      } else if (thumb.startsWith('/')) {
+      } else if (thumb.startsWith("/")) {
         imageUrl = base + thumb.slice(1);
       } else {
         imageUrl = base + thumb;
       }
 
-      // FIX: Fallback slug untuk link
-      const slug = post.slug || post.id.split('/').pop()?.replace(/\.mdx?$/, '');
+      // FIX: Fallback slug untuk link (sama logic dengan [slug].astro)
+      let slug = post.slug;
+      if (!slug || slug.trim() === "") {
+        const idParts = post.id.split("/");
+        const filename = idParts[idParts.length - 1];
+        slug = filename.replace(/\.mdx?$/, "");
+      }
 
       const dateStr = post.data.pubDate.toLocaleDateString("id-ID", {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
+        year: "numeric", month: "short", day: "numeric"
       });
 
       return (
-        <div class={`post-item ${page !== 1 ? 'hidden' : ''}`} data-page={page}>
+        <div class={`post-item ${page !== 1 ? "hidden" : ""}`} data-page={page}>
           <a href={`${base}blog/${slug}`} class="post-card">
             <div class="post-thumb-wrap">
               <img 
@@ -51,7 +54,7 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
                 alt={post.data.title} 
                 class="post-thumb" 
                 loading="lazy" 
-                onerror={`this.src='${base}images/placeholder.jpg'`}
+                onerror={`this.src="${base}images/placeholder.jpg"`}
               />
             </div>
             <div class="post-body">
@@ -192,28 +195,27 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
 </style>
 
 <script>
-  // Client-side pagination logic
-  const postsList = document.getElementById('posts-list');
-  const pagination = document.getElementById('pagination');
+  const postsList = document.getElementById("posts-list");
+  const pagination = document.getElementById("pagination");
   if (postsList && pagination) {
     const totalPages = parseInt(postsList.dataset.totalPages, 10);
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const pageInfo = document.getElementById('page-info');
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const pageInfo = document.getElementById("page-info");
     let currentPage = 1;
 
     function showPage(page) {
-      document.querySelectorAll('.post-item').forEach(item => {
-        item.classList.toggle('hidden', parseInt(item.dataset.page, 10) !== page);
+      document.querySelectorAll(".post-item").forEach((item) => {
+        item.classList.toggle("hidden", parseInt(item.dataset.page, 10) !== page);
       });
       currentPage = page;
       if (pageInfo) pageInfo.textContent = `${page} / ${totalPages}`;
       if (prevBtn) prevBtn.disabled = page === 1;
       if (nextBtn) nextBtn.disabled = page === totalPages;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    prevBtn?.addEventListener('click', () => showPage(currentPage - 1));
-    nextBtn?.addEventListener('click', () => showPage(currentPage + 1));
+    prevBtn?.addEventListener("click", () => showPage(currentPage - 1));
+    nextBtn?.addEventListener("click", () => showPage(currentPage + 1));
   }
 </script>
