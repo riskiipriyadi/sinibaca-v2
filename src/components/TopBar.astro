@@ -59,7 +59,7 @@ const postsData = posts.map(p => ({
 
     function renderResults(results: any[]) {
       if (!searchDropdown) return;
-      
+
       if (results.length === 0) {
         searchDropdown.innerHTML = `
           <div class="search-empty">
@@ -146,6 +146,9 @@ const postsData = posts.map(p => ({
     border-bottom: 1px solid var(--border, #e2e8f0);
     z-index: 100;
     transition: background 0.3s ease;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
   }
   html[data-mode="dark"] .topbar {
     background: rgba(10,10,10,0.85);
@@ -161,6 +164,8 @@ const postsData = posts.map(p => ({
     margin: 0 auto;
     padding: 0 24px;
     gap: 16px;
+    width: 100%;
+    min-width: 0;
   }
 
   .logo {
@@ -172,9 +177,16 @@ const postsData = posts.map(p => ({
     font-weight: 700;
     font-size: 1.125rem;
     flex-shrink: 0;
+    min-width: 0;
   }
   .logo-img {
     border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .logo-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .search-bar {
@@ -191,6 +203,7 @@ const postsData = posts.map(p => ({
     height: 38px;
     display: flex;
     align-items: center;
+    min-width: 0;
   }
   .search-bar:focus-within {
     border-color: var(--accent, #6366f1);
@@ -217,6 +230,7 @@ const postsData = posts.map(p => ({
     color: var(--text, #0f172a);
     font-size: 0.875rem;
     font-family: inherit;
+    min-width: 0;
   }
   .search-input::placeholder {
     color: var(--text-muted, #94a3b8);
@@ -306,6 +320,7 @@ const postsData = posts.map(p => ({
     align-items: center;
     gap: 6px;
     font-family: inherit;
+    flex-shrink: 0;
   }
   .post-count-badge {
     background: var(--accent, #6366f1);
@@ -347,28 +362,89 @@ const postsData = posts.map(p => ({
     cursor: pointer;
     border-radius: 8px;
     transition: background 0.2s ease;
+    flex-shrink: 0;
   }
   .menu-toggle:hover {
     background: var(--bg-secondary, #f8fafc);
   }
 
+  /* ========== TABLET ========== */
   @media (max-width: 768px) {
     .topbar-inner {
-      padding: 0 16px;
+      padding: 0 12px;
+      gap: 10px;
     }
     .search-bar {
       max-width: none;
+      min-width: 0;
+      height: 36px;
     }
     .search-dropdown {
       position: fixed;
       top: 66px;
-      left: 16px;
-      right: 16px;
+      left: 12px;
+      right: 12px;
       width: auto;
       min-width: auto;
     }
     .menu-toggle {
       display: flex;
+    }
+    .post-count-pill {
+      display: none;
+    }
+    .post-count-badge {
+      padding: 2px 6px;
+      font-size: 0.7rem;
+    }
+  }
+
+  /* ========== MOBILE KECIL ========== */
+  @media (max-width: 480px) {
+    .topbar {
+      height: 56px;
+    }
+    .topbar-inner {
+      padding: 0 10px;
+      gap: 8px;
+    }
+    .logo-text {
+      font-size: 1rem;
+    }
+    .search-bar {
+      padding: 0 10px 0 32px;
+      height: 34px;
+    }
+    .search-icon {
+      left: 10px;
+      width: 14px;
+      height: 14px;
+    }
+    .search-input {
+      font-size: 0.8rem;
+    }
+    .search-input::placeholder {
+      font-size: 0.8rem;
+    }
+    .post-count {
+      display: none;
+    }
+    .menu-toggle {
+      width: 36px;
+      height: 36px;
+    }
+    .menu-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .logo-text {
+      display: none;
+    }
+    .topbar-inner {
+      gap: 6px;
     }
   }
 </style>
