@@ -125,8 +125,8 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
     <style>
       .page-wrapper {
         display: grid;
-        /* 🔧 FIX: lebar sidebar 260px → 300px */
-        grid-template-columns: 300px 1fr 300px;
+        /* 🔧 FIX: kiri 300px, kanan 400px */
+        grid-template-columns: 300px 1fr 400px;
         gap: 32px;
         padding: 80px 24px 40px;
         flex: 1;
@@ -170,7 +170,7 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
 
       @media (max-width: 1200px) {
         .page-wrapper {
-          /* 🔧 FIX: lebar sidebar 260px → 300px */
+          /* kiri tetap 300px, kanan hidden */
           grid-template-columns: 300px 1fr;
           gap: 32px;
         }
@@ -189,7 +189,6 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
           top: 60px;
           left: 0;
           bottom: 0;
-          /* 🔧 FIX: lebar sidebar mobile 280px → 300px */
           width: 300px;
           z-index: 90;
           background: var(--bg);
