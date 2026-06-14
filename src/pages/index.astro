@@ -86,7 +86,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     gap: 10px;
     flex: 1;
     overflow: hidden;
-    /* justify-content: center dihapus — post items nempel ke atas */
+    padding-top: 6px;     /* ⬅️ Ruang hover atas */
+    padding-bottom: 6px;  /* ⬅️ Ruang hover bawah */
   }
 
   .post-card {
@@ -245,6 +246,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .post-date { font-size: 0.7rem; }
     .pagination-wrap { padding-top: 10px; padding-right: 4px; margin-top: 4px; }
     .next-link { padding: 6px 12px; font-size: 0.85rem; margin-right: 4px; }
+    .posts-list { padding-top: 4px; padding-bottom: 4px; }
   }
 
   @media (max-width: 360px) {
