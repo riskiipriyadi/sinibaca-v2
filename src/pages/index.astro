@@ -44,7 +44,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     })}
   </div>
 
-  <!-- Pagination: Next → (kanan, dengan jarak atas) -->
+  <!-- Pagination: Next → (kanan tapi tidak mentok) -->
   <div class="pagination-wrap">
     <a href={`${base}/page/2`} class="next-link">Next →</a>
   </div>
@@ -195,12 +195,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     word-break: break-word;
   }
 
-  /* Pagination: Next → (kanan & tidak mepet) */
+  /* Pagination: Next → (kanan tapi tidak mentok) */
   .pagination-wrap {
     display: flex;
-    justify-content: flex-end;   /* Pindah ke kanan */
-    padding-top: 32px;           /* Jarak dari atas */
-    margin-top: 16px;            /* Extra breathing room */
+    justify-content: flex-end;
+    padding-top: 32px;
+    padding-right: 8px;          /* ⬅️ Geser ke kiri sedikit */
+    margin-top: 16px;
     border-top: 1px solid var(--border);
   }
 
@@ -217,13 +218,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.2s ease;
+    margin-right: 8px;           /* ⬅️ Ruang agar shadow tidak terpotong */
   }
 
   .next-link:hover {
     border-color: var(--accent);
     color: var(--accent);
-    box-shadow: 0 4px 12px rgba(99,102,241,0.08);
-    transform: translateX(3px);
+    box-shadow: 0 4px 16px rgba(99,102,241,0.12);
+    transform: translateX(-2px); /* ⬅️ Hover ke kiri (aman, tidak terpotong) */
   }
 
   @media (max-width: 640px) {
@@ -238,8 +240,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .post-meta { gap: 8px; }
     .post-cat { font-size: 0.7rem; padding: 0.1rem 0.5rem; }
     .post-date { font-size: 0.75rem; }
-    .pagination-wrap { padding-top: 24px; margin-top: 12px; }
-    .next-link { padding: 8px 16px; font-size: 0.9rem; }
+    .pagination-wrap { padding-top: 24px; padding-right: 4px; margin-top: 12px; }
+    .next-link { padding: 8px 16px; font-size: 0.9rem; margin-right: 4px; }
   }
 
   @media (max-width: 360px) {
