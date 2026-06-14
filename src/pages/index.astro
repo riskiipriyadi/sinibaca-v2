@@ -44,7 +44,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     })}
   </div>
 
-  <!-- Pagination: Next → (kanan tapi tidak mentok) -->
+  <!-- Pagination: Next → -->
   <div class="pagination-wrap">
     <a href={`${base}/page/2`} class="next-link">Next →</a>
   </div>
@@ -195,14 +195,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     word-break: break-word;
   }
 
-  /* Pagination: Next → (kanan tapi tidak mentok) */
   .pagination-wrap {
     display: flex;
     justify-content: flex-end;
     padding-top: 32px;
-    padding-right: 8px;          /* ⬅️ Geser ke kiri sedikit */
+    padding-right: 8px;
     margin-top: 16px;
-    border-top: 1px solid var(--border);
+    /* border-top dihapus — tidak ada garis lagi */
   }
 
   .next-link {
@@ -218,14 +217,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.2s ease;
-    margin-right: 8px;           /* ⬅️ Ruang agar shadow tidak terpotong */
+    margin-right: 8px;
   }
 
   .next-link:hover {
     border-color: var(--accent);
     color: var(--accent);
     box-shadow: 0 4px 16px rgba(99,102,241,0.12);
-    transform: translateX(-2px); /* ⬅️ Hover ke kiri (aman, tidak terpotong) */
+    transform: translateX(-2px);
   }
 
   @media (max-width: 640px) {
