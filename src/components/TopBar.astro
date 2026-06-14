@@ -13,7 +13,7 @@ const postsData = posts.map(p => ({
 }));
 ---
 
-<<header class="topbar">
+<header class="topbar">
   <div class="topbar-inner">
     <a href={`${base}/`} class="logo">
       <img src={`${base}/favicons/favicon-32x32.png`} alt="sinibaca" class="logo-img" width="28" height="28" />
@@ -463,12 +463,13 @@ const postsData = posts.map(p => ({
     .search-bar {
       max-width: none;
       min-width: 0;
+      flex: 1;
     }
     .search-box {
       height: 36px;
     }
     .search-btn {
-      padding: 0 14px;
+      padding: 0 12px;
       font-size: 12px;
     }
     .search-dropdown {
@@ -479,6 +480,7 @@ const postsData = posts.map(p => ({
       width: auto;
       min-width: auto;
       max-width: calc(100vw - 24px);
+      box-sizing: border-box;
     }
     .menu-toggle {
       display: flex;
@@ -498,10 +500,14 @@ const postsData = posts.map(p => ({
     }
     .topbar-inner {
       padding: 0 10px;
-      gap: 8px;
+      gap: 6px;
     }
     .logo-text {
-      font-size: 1rem;
+      font-size: 0.95rem;
+    }
+    .search-bar {
+      flex: 1;
+      min-width: 0;
     }
     .search-box {
       height: 34px;
@@ -510,17 +516,18 @@ const postsData = posts.map(p => ({
     .search-icon {
       width: 14px;
       height: 14px;
-      margin-left: 8px;
-      margin-right: 6px;
+      margin-left: 6px;
+      margin-right: 4px;
     }
     .search-input {
       font-size: 0.8rem;
+      padding: 0 2px;
     }
     .search-input::placeholder {
       font-size: 0.8rem;
     }
     .search-btn {
-      padding: 0 10px;
+      padding: 0 8px;
       font-size: 11px;
     }
     .post-count {
@@ -539,6 +546,7 @@ const postsData = posts.map(p => ({
       left: 10px;
       right: 10px;
       max-width: calc(100vw - 20px);
+      box-sizing: border-box;
     }
   }
 

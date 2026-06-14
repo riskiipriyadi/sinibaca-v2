@@ -50,6 +50,8 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
 <style>
   .home-header {
     margin-bottom: 24px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .page-title {
     font-size: 1.75rem;
@@ -57,16 +59,19 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
     letter-spacing: -0.02em;
     margin: 0 0 8px;
     color: var(--text);
+    word-break: break-word;
   }
   .page-subtitle {
     font-size: 0.95rem;
     color: var(--text-muted);
     margin: 0;
+    word-break: break-word;
   }
   .posts-list {
     display: flex;
     flex-direction: column;
-    /* gap dihandle oleh border-bottom di PostCard */
+    width: 100%;
+    box-sizing: border-box;
   }
   .post-item.hidden {
     display: none;
@@ -76,6 +81,8 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
     display: flex;
     justify-content: center;
     padding: 32px 0 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .page-buttons {
     display: flex;
@@ -83,6 +90,7 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 100%;
   }
   .page-btn {
     padding: 8px 14px;
@@ -94,6 +102,7 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
   }
   .page-btn:hover:not(:disabled) {
     border-color: var(--accent);
@@ -107,6 +116,54 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
   .page-btn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+  }
+
+  @media (max-width: 640px) {
+    .home-header {
+      margin-bottom: 20px;
+    }
+    .page-title {
+      font-size: 1.4rem;
+    }
+    .page-subtitle {
+      font-size: 0.88rem;
+    }
+    .pagination {
+      padding: 24px 0 12px;
+    }
+    .page-buttons {
+      gap: 6px;
+    }
+    .page-btn {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .page-title {
+      font-size: 1.3rem;
+    }
+    .page-subtitle {
+      font-size: 0.85rem;
+    }
+    .page-btn {
+      padding: 5px 10px;
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .page-title {
+      font-size: 1.2rem;
+    }
+    .page-buttons {
+      gap: 4px;
+    }
+    .page-btn {
+      padding: 4px 8px;
+      font-size: 0.7rem;
+    }
   }
 </style>
 

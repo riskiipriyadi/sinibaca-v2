@@ -11,7 +11,7 @@ const recentPosts = sortedPosts.slice(0, 3);
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<<Layout title="sinibaca — Blog Modern" description="Kumpulan artikel teknologi, tutorial, dan catatan pengembangan web." noScroll={true}>
+<Layout title="sinibaca — Blog Modern" description="Kumpulan artikel teknologi, tutorial, dan catatan pengembangan web." noScroll={true}>
   <div class="home-wrapper">
     <div class="home-header">
       <h1 class="page-title">Tulisan</h1>
@@ -258,6 +258,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       height: auto;
       overflow: visible;
       min-height: 0;
+      width: 100%;
+      max-width: 100%;
     }
     .posts-list {
       overflow: visible;
@@ -265,10 +267,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       gap: 14px;
       padding-top: 4px;
       padding-bottom: 4px;
+      width: 100%;
     }
-    .page-title { font-size: 1.3rem; }
-    .page-subtitle { font-size: 0.8rem; }
-    .home-header { margin-bottom: 8px; padding-bottom: 6px; }
+    .page-title { 
+      font-size: 1.3rem;
+      word-break: break-word;
+    }
+    .page-subtitle { 
+      font-size: 0.8rem;
+      word-break: break-word;
+    }
+    .home-header { 
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      width: 100%;
+    }
     .post-card {
       flex-direction: column;
       gap: 12px;
@@ -278,20 +291,64 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       max-width: 100%;
       box-sizing: border-box;
     }
-    .post-card::before { border-radius: 10px 0 0 10px; }
-    .post-thumb-wrap { width: 100%; height: 160px; border-radius: 8px; }
-    .post-title { font-size: 1rem; line-height: 1.4; }
-    .post-desc { font-size: 0.85rem; -webkit-line-clamp: 3; }
-    .post-meta { gap: 8px; }
-    .post-cat { font-size: 0.7rem; padding: 0.1rem 0.5rem; }
+    .post-card::before { border-radius: 10px 10px 0 0; }
+    .post-thumb-wrap { 
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
+    }
+    .post-body {
+      width: 100%;
+    }
+    .post-title { 
+      font-size: 1rem;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    .post-desc { 
+      font-size: 0.85rem;
+      -webkit-line-clamp: 3;
+      word-break: break-word;
+    }
+    .post-meta { 
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .post-cat { 
+      font-size: 0.7rem;
+      padding: 0.1rem 0.5rem;
+    }
     .post-date { font-size: 0.75rem; }
-    .ref-count { font-size: 0.78rem; margin-top: 2px; }
-    .pagination-wrap { padding-top: 10px; padding-right: 4px; margin-top: 4px; }
-    .next-link { padding: 6px 12px; font-size: 0.85rem; margin-right: 4px; }
+    .ref-count { 
+      font-size: 0.78rem;
+      margin-top: 2px;
+      padding: 2px 8px;
+    }
+    .pagination-wrap { 
+      padding-top: 10px;
+      padding-right: 0;
+      margin-top: 4px;
+      justify-content: center;
+    }
+    .next-link { 
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .post-thumb-wrap { height: 160px; }
+    .post-title { font-size: 0.95rem; }
+    .post-desc { font-size: 0.82rem; }
+    .post-card { padding: 10px; }
   }
 
   @media (max-width: 360px) {
     .post-thumb-wrap { height: 140px; }
-    .post-title { font-size: 0.95rem; }
+    .post-title { font-size: 0.9rem; }
+    .post-desc { font-size: 0.8rem; }
+    .post-card { padding: 8px; gap: 10px; }
+    .page-title { font-size: 1.2rem; }
   }
 </style>
