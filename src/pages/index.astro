@@ -7,9 +7,7 @@ const sortedPosts = posts.sort(
   (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
 );
 
-// ⬇️ Tampilkan maksimal 3 post di beranda
 const recentPosts = sortedPosts.slice(0, 3);
-
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -28,6 +26,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           year: "numeric", month: "short", day: "numeric"
         });
         const slug = post.id.split('/').pop()?.replace(/\.mdx?$/, '') || 'post';
+        const refCount = post.data.refCount;
         return (
           <div class="post-item">
             <a href={`${base}/blog/${slug}`} class="post-card">
@@ -41,6 +40,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                 </div>
                 <h2 class="post-title">{post.data.title}</h2>
                 <p class="post-desc">{post.data.description || ""}</p>
+                {refCount !== undefined && (
+                  <span class="ref-count">📚 {refCount} referensi</span>
+                )}
               </div>
             </a>
           </div>
@@ -86,7 +88,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .posts-list {
     display: flex;
     flex-direction: column;
-    gap: 18px;                /* ⬆️ ditinggikan dari 10px */
+    gap: 18px;
     flex: 1;
     overflow: hidden;
     padding-top: 6px;
@@ -95,8 +97,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   .post-card {
     display: flex;
-    gap: 16px;                /* ⬆️ dari 14px */
-    padding: 16px;            /* ⬆️ dari 14px */
+    gap: 16px;
+    padding: 16px;
     border: 1px solid var(--border);
     border-radius: 12px;
     background: var(--card-bg);
@@ -130,8 +132,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   .post-thumb-wrap {
-    width: 200px;             /* ⬇️ dari 280px */
-    height: 130px;            /* ⬇️ dari 190px */
+    width: 200px;
+    height: 130px;
     flex-shrink: 0;
     border-radius: 10px;
     overflow: hidden;
@@ -161,7 +163,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 0.78rem;       /* sedikit turun */
+    font-size: 0.78rem;
     flex-wrap: wrap;
   }
   .post-cat {
@@ -170,7 +172,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     background: rgba(99,102,241,0.08);
     padding: 0.12rem 0.5rem;
     border-radius: 999px;
-    font-size: 0.72rem;       /* sedikit turun */
+    font-size: 0.72rem;
     flex-shrink: 0;
   }
   .post-date {
@@ -179,7 +181,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     flex-shrink: 0;
   }
   .post-title {
-    font-size: 1.1rem;        /* ⬇️ dari 1.15rem */
+    font-size: 1.1rem;
     font-weight: 700;
     line-height: 1.35;
     margin: 0;
@@ -193,7 +195,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: var(--accent);
   }
   .post-desc {
-    font-size: 0.88rem;       /* ⬇️ dari 0.9rem */
+    font-size: 0.88rem;
     color: var(--text-muted);
     line-height: 1.6;
     margin: 0;
@@ -202,6 +204,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-break: break-word;
+  }
+
+  .ref-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 2px;
   }
 
   .pagination-wrap {
@@ -247,6 +259,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     .post-meta { gap: 8px; }
     .post-cat { font-size: 0.7rem; padding: 0.1rem 0.5rem; }
     .post-date { font-size: 0.75rem; }
+    .ref-count { font-size: 0.78rem; }
     .pagination-wrap { padding-top: 10px; padding-right: 4px; margin-top: 4px; }
     .next-link { padding: 6px 12px; font-size: 0.85rem; margin-right: 4px; }
     .posts-list { gap: 14px; padding-top: 4px; padding-bottom: 4px; }

@@ -5,6 +5,7 @@ pubDate: 2026-06-14
 thumbnail: "/images/tikus-arsitektur-rumah.png"
 category: "Arsitektur"
 tags: ["tikus", "arsitektur", "infestasi", "kesehatan"]
+refCount: 32
 ---
 # Tikus Tidak Masuk Rumah Karena Kotor, Ia Masuk Karena Arsitektur Rumahmu Mengundangnya
 
