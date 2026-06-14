@@ -7,7 +7,7 @@ const sortedPosts = posts.sort(
   (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
 );
 
-const postsPerPage = 1;
+const postsPerPage = 999;
 const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -18,7 +18,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <p class="page-subtitle">Sedikit, tapi ada.</p>
   </div>
 
-  <div class="posts-list" id="posts-list" data-total-pages={totalPages}>
+  <div class="posts-list" id="posts-list">
     {sortedPosts.map((post, index) => {
       const page = Math.floor(index / postsPerPage) + 1;
       const thumb = post.data.thumbnail || (post.data.heroImage ? (typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src) : null);
@@ -28,7 +28,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       });
       const slug = post.id.split('/').pop()?.replace(/\.mdx?$/, '') || 'post';
       return (
-        <div class={`post-item ${page !== 1 ? 'hidden' : ''}`} data-page={page}>
+        <div class={`post-item ${page !== 1 ? 'hidden' : ''}`}>
           <a href={`${base}/blog/${slug}`} class="post-card">
             <div class="post-thumb-wrap">
               <img src={imageUrl} alt={post.data.title} class="post-thumb" loading="lazy" onerror="this.style.display='none'" />
@@ -47,18 +47,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     })}
   </div>
 
-  {totalPages > 1 && (
-    <div class="pagination" id="pagination">
-      <div class="page-buttons">
-        <button class="page-btn page-prev" id="page-prev" disabled>← Prev</button>
-        {Array.from({ length: totalPages }, (_, i) => {
-          const page = i + 1;
-          return (
-            <button class={`page-btn page-num ${page === 1 ? 'active' : ''}`} data-page={page}>
-              {page}
-            </button>
-          );
-        })}
+  
         <button class="page-btn page-next" id="page-next">Next →</button>
       </div>
     </div>
@@ -331,51 +320,3 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 </style>
 
-<script>
-  (function() {
-    const list = document.getElementById('posts-list');
-    const pagination = document.getElementById('pagination');
-    if (!list || !pagination) return;
-
-    const items = list.querySelectorAll('.post-item');
-    const totalPages = parseInt(list.dataset.totalPages || '1');
-    let currentPage = 1;
-
-    const prevBtn = document.getElementById('page-prev');
-    const nextBtn = document.getElementById('page-next');
-    const numBtns = pagination.querySelectorAll('.page-num');
-
-    function showPage(page: number) {
-      if (page < 1 || page > totalPages) return;
-      currentPage = page;
-
-      items.forEach(item => {
-        const itemPage = parseInt((item as HTMLElement).dataset.page || '1');
-        item.classList.toggle('hidden', itemPage !== currentPage);
-      });
-
-      numBtns.forEach(btn => {
-        btn.classList.toggle('active', parseInt((btn as HTMLElement).dataset.page || '1') === currentPage);
-      });
-
-      if (prevBtn) (prevBtn as HTMLButtonElement).disabled = currentPage === 1;
-      if (nextBtn) (nextBtn as HTMLButtonElement).disabled = currentPage === totalPages;
-
-      window.location.hash = `page-${currentPage}`;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    numBtns.forEach(btn => {
-      btn.addEventListener('click', () => showPage(parseInt((btn as HTMLElement).dataset.page || '1')));
-    });
-
-    if (prevBtn) prevBtn.addEventListener('click', () => showPage(currentPage - 1));
-    if (nextBtn) nextBtn.addEventListener('click', () => showPage(currentPage + 1));
-
-    const hash = window.location.hash;
-    if (hash.startsWith('#page-')) {
-      const p = parseInt(hash.replace('#page-', ''));
-      if (p >= 1 && p <= totalPages) showPage(p);
-    }
-  })();
-</script>
