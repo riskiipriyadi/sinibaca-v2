@@ -6,9 +6,10 @@ import TopBar from "../components/TopBar.astro";
 interface Props {
   title?: string;
   description?: string;
+  noScroll?: boolean;
 }
 
-const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.props;
+const { title = "sinibaca", description = "Blog modern dengan Astro", noScroll = false } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -19,20 +20,16 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/sinibaca-v2/favicons/favicon.ico" />
     <link rel="icon" type="image/png" sizes="16x16" href="/sinibaca-v2/favicons/favicon-16x16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/sinibaca-v2/favicons/favicon-32x32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/sinibaca-v2/favicons/apple-touch-icon.png" />
     <link rel="manifest" href="/sinibaca-v2/favicons/site.webmanifest" />
-
-    <!-- Fallback: browser selalu cari /favicon.ico di root -->
     <link rel="icon" type="image/x-icon" href="/sinibaca-v2/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <!-- Hindari flash tema saat reload -->
     <script is:inline>
       const saved = localStorage.getItem("theme");
       if (saved) document.documentElement.setAttribute("data-mode", saved);
@@ -79,6 +76,21 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
         width: 100%;
         max-width: 100vw;
       }
+      /* ⬇️ NO-SCROLL MODE: body lock ke viewport */
+      body.no-scroll {
+        height: 100vh;
+        overflow: hidden;
+      }
+      body.no-scroll .page-wrapper {
+        min-height: 0;
+        flex: 1;
+        overflow: hidden;
+        padding-top: 68px;    /* dikurangi dari 80px */
+        padding-bottom: 16px; /* dikurangi dari 40px */
+      }
+      body.no-scroll .main-content {
+        overflow: hidden;
+      }
       *, *::before, *::after {
         box-sizing: border-box;
       }
@@ -106,7 +118,7 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
       }
     </style>
   </head>
-  <body>
+  <body class={noScroll ? "no-scroll" : ""}>
     <TopBar />
     <div class="page-wrapper">
       <aside class="sidebar-left">
@@ -125,7 +137,6 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
     <style>
       .page-wrapper {
         display: grid;
-        /* 🔧 FIX: kiri 300px, kanan 400px */
         grid-template-columns: 300px 1fr 400px;
         gap: 32px;
         padding: 80px 24px 40px;
@@ -170,11 +181,13 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
 
       @media (max-width: 1200px) {
         .page-wrapper {
-          /* kiri tetap 300px, kanan hidden */
           grid-template-columns: 300px 1fr;
           gap: 32px;
         }
         .sidebar-right { display: none; }
+        body.no-scroll .page-wrapper {
+          grid-template-columns: 300px 1fr;
+        }
       }
 
       @media (max-width: 900px) {
@@ -182,6 +195,10 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
           grid-template-columns: 1fr;
           padding: 60px 16px 40px;
           gap: 0;
+        }
+        body.no-scroll .page-wrapper {
+          padding-top: 60px;
+          padding-bottom: 16px;
         }
         .sidebar-left {
           display: none;
@@ -207,6 +224,10 @@ const { title = "sinibaca", description = "Blog modern dengan Astro" } = Astro.p
       @media (max-width: 480px) {
         .page-wrapper {
           padding: 60px 12px 32px;
+        }
+        body.no-scroll .page-wrapper {
+          padding-top: 60px;
+          padding-bottom: 12px;
         }
         .site-footer {
           padding: 12px 16px;
