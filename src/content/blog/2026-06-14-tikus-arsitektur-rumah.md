@@ -2,7 +2,7 @@
 title: "Tikus Tidak Masuk Rumah Karena Kotor, Ia Masuk Karena Arsitektur Rumahmu Mengundangnya"
 description: "Sebuah studi di Singapura mengukur faktor risiko infestasi tikus di ratusan kamar pembuangan sampah pada kawasan hunian publik. Hasilnya mengejutkan bukan karena berkaitan dengan volume sampah, melainkan karena berkaitan dengan besi: perangkap lantai yang rusak meningkatkan kemungkinan infestasi tikus hingga 36,7 kali lipat."
 pubDate: 2026-06-14
-heroImage: "/images/tikus-arsitektur-rumah.png"
+thumbnail: "/images/tikus-arsitektur-rumah.png"
 category: "Arsitektur"
 ---
 # Tikus Tidak Masuk Rumah Karena Kotor, Ia Masuk Karena Arsitektur Rumahmu Mengundangnya
