@@ -4,6 +4,7 @@ description: "Sebuah studi di Singapura mengukur faktor risiko serangan tikus di
 pubDate: 2026-06-14
 thumbnail: "/images/tikus-arsitektur-rumah.png"
 category: "Arsitektur"
+tags: ["tikus", "arsitektur", "infestasi", "kesehatan"]
 ---
 # Tikus Tidak Masuk Rumah Karena Kotor, Ia Masuk Karena Arsitektur Rumahmu Mengundangnya
 
