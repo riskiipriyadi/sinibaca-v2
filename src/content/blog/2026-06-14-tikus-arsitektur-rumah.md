@@ -9,7 +9,7 @@ category: "Arsitektur"
 
 Sebuah studi di Singapura mengukur faktor risiko serangan tikus di ratusan tempat pembuangan sampah pada kawasan hunian publik. Hasilnya mengejutkan bukan karena berkaitan dengan volume sampah, melainkan karena berkaitan dengan besi: penutup saluran yang rusak meningkatkan risikonya hingga 36,7 kali lipat. Bukan karena kamar itu lebih kotor; karena satu komponen struktural gagal bekerja, dan tikus langsung menemukannya.
 
-Narasi populer menyalahkan kebersihan. Tapi data konsisten menunjukkan sesuatu yang berbeda: tikus adalah oportunis struktural. Mereka tidak memilih rumah yang kotor; mereka memilih rumah yang menyediakan akses, perlindungan, dan rute pelarian. Artikel ini menyelidiki kondisi fisik apa yang paling sering menjadi titik masuk tikus, dan bagaimana mengenalinya sebelum tikus sudah di dalam.
+Narasi populer menyalahkan kebersihan. Tapi data konsisten mengungkap hal lain: tikus adalah oportunis struktural. Mereka tidak memilih rumah yang kotor; mereka memilih rumah yang menyediakan akses, perlindungan, dan rute pelarian. Tulisan ini membedah kondisi fisik apa yang paling sering menjadi titik masuk tikus, dan bagaimana mengenalinya sebelum tikus sudah di dalam.
 
 ---
 
