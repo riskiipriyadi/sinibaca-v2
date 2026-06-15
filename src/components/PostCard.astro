@@ -78,7 +78,8 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
     <div class="card-footer-row">
       {refCount > 0 && (
         <div class="ref-badge">
-          📚 {refCount} referensi
+          <img src={`${base}/icons/ref-icon.png`} alt="referensi" width="16" height="16" style="width:16px;height:16px;object-fit:contain;display:inline-block;" />
+          {refCount} referensi
         </div>
       )}
       <span class="rilis-pill">
