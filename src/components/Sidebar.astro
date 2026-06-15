@@ -6,9 +6,21 @@ import Newsletter from "./Newsletter.astro";
 const base = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
 
 const navItems = [
-  { label: "Beranda", href: `${base}` },
-  { label: "Arsip", href: `${base}arsip` },
-  { label: "Tentang", href: `${base}about` },
+  { 
+    label: "Beranda", 
+    href: `${base}`,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`
+  },
+  { 
+    label: "Arsip", 
+    href: `${base}arsip`,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`
+  },
+  { 
+    label: "Tentang", 
+    href: `${base}about`,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`
+  },
 ];
 
 const socials = [
@@ -34,7 +46,10 @@ const socials = [
     <h4 class="section-title">Navigasi</h4>
     <nav class="nav-list">
       {navItems.map((item) => (
-        <a href={item.href} class="nav-item">{item.label}</a>
+        <a href={item.href} class="nav-item">
+          <span class="nav-icon" set:html={item.icon}></span>
+          {item.label}
+        </a>
       ))}
     </nav>
   </div>
@@ -157,31 +172,48 @@ const socials = [
   .nav-list { 
     display: flex; 
     flex-direction: column; 
-    row-gap: 0.375rem;
+    gap: 0.5rem;
     list-style: none;
     margin: 0;
-    padding: 0 0 0 25%;
+    padding: 0;
     width: 100%;
     box-sizing: border-box;
   }
   .nav-item {
-    display: block;
-    text-align: left;
-    min-height: 2.25rem;
-    box-sizing: border-box;
-    padding: 0.5rem 0.75rem;
-    border-radius: 8px;
-    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 10px;
+    font-size: 0.9rem;
     text-decoration: none;
     color: var(--text, #0f172a);
-    transition: all 0.15s ease;
+    transition: all 0.2s ease;
     font-weight: 500;
-    line-height: 1.5;
-    white-space: nowrap;
+    line-height: 1.4;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .nav-item:first-child {
+    width: 258px;
+    max-width: 100%;
+    height: 32.38px;
+    padding: 0.5rem 0.875rem;
   }
   .nav-item:hover {
     background: var(--hover, #f1f5f9);
+    border-color: var(--accent, #6366f1);
     color: var(--accent, #6366f1);
+    transform: translateY(-1px);
+  }
+  .nav-item:active {
+    transform: translateY(0);
+  }
+  .nav-icon { 
+    display: flex; 
+    align-items: center;
+    flex-shrink: 0;
   }
 
   .social-list { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -197,6 +229,10 @@ const socials = [
     color: inherit;
     transition: all 0.2s ease;
     font-weight: 500;
+    width: 258px;
+    max-width: 100%;
+    height: 32.38px;
+    box-sizing: border-box;
   }
   .social-item:hover {
     background: var(--hover, #f1f5f9);
