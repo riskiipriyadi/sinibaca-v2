@@ -2,10 +2,9 @@
 title: "Orang-orang yang Hidupnya Tidak Bisa Dikontrol karena Mereka Sudah Tahu Apa yang Benar-benar Penting"
 description: "Mengapa Sokrates dan Diogenes tidak bisa dikontrol oleh kekuasaan, ancaman, atau tawaran apapun? Karena mereka sudah memutuskan lebih dulu apa yang tidak akan mereka kompromikan."
 pubDate: 2026-06-02
-thumbnail: /images/thumbnail-sudah-tahu.png
-category: Filsafat
-tags: [sokrates, diogenes, stoisisme]
-refCount: 27
+thumbnail: "/sokrates-diogenes-thumbnail.png"
+category: "Filsafat"
+tags: ["sokrates", "diogenes", "stoisisma", "infestasi", "kesehatan"]
 ---
 # Orang-orang yang Hidupnya Tidak Bisa Dikontrol karena Mereka Sudah Tahu Apa yang Benar-benar Penting
 

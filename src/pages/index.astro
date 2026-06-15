@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import { countReferences } from "../utils/countReferences";
 
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = posts.sort(
@@ -28,9 +29,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           year: "numeric", month: "short", day: "numeric"
         });
         const slug = post.id.split("/").pop()?.replace(/\.mdx?$/, "") || "post";
-        const rawData = post.data as any;
-        const rc = rawData.refCount;
-        const hasRef = typeof rc === "number";
+        const refCount = countReferences(post.body || "");
+        const hasRef = refCount > 0;
         return (
           <div class="post-item">
             <a href={`${base}/blog/${slug}`} class="post-card">
@@ -45,7 +45,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
                 <h2 class="post-title">{post.data.title}</h2>
                 <p class="post-desc">{post.data.description || ""}</p>
                 {hasRef && (
-                  <div class="ref-count">📚 {rc} referensi</div>
+                  <div class="ref-count">📚 {refCount} referensi</div>
                 )}
               </div>
             </a>

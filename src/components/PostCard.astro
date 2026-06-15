@@ -1,4 +1,6 @@
 ---
+import { countReferences } from "../utils/countReferences";
+
 interface Props {
   post: {
     slug?: string;
@@ -11,7 +13,6 @@ interface Props {
       tags?: string[];
       thumbnail?: string;
       heroImage?: string | { src: string };
-      refCount?: number;
     };
     body?: string;
   };
@@ -22,6 +23,8 @@ const { data, body } = post;
 const slug = post.slug || (post.id ? post.id.split("/").pop()?.replace(/\.mdx?$/, "") : "") || "post";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const refCount = countReferences(body || "");
 
 function getImageUrl(thumbnail?: string, heroImage?: string | { src: string }): string {
   const placeholder = `${base}/images/placeholder.jpg`;
@@ -57,9 +60,9 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
     </div>
     <h2 class="card-title">{data.title}</h2>
     <p class="card-excerpt">{data.description || ""}</p>
-    {data.refCount && (
+    {refCount > 0 && (
       <div class="ref-badge">
-        📚 {data.refCount} referensi
+        📚 {refCount} referensi
       </div>
     )}
   </div>
