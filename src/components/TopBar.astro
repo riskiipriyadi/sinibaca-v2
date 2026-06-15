@@ -405,7 +405,7 @@ const postsData = posts.map(p => ({
     flex-shrink: 0;
   }
 
-  .nav-item {
+  .topbar-nav .nav-item {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -423,7 +423,7 @@ const postsData = posts.map(p => ({
     box-sizing: border-box;
   }
 
-  .nav-item:hover {
+  .topbar-nav .nav-item:hover {
     background: var(--bg-secondary, #f8fafc);
     border-color: var(--border, #e2e8f0);
   }
@@ -493,10 +493,10 @@ const postsData = posts.map(p => ({
     .topbar-nav {
       gap: 8px;
     }
-    .nav-item span {
+    .topbar-nav .nav-item span {
       display: none;
     }
-    .nav-item {
+    .topbar-nav .nav-item {
       padding: 8px;
       min-width: 36px;
       justify-content: center;
@@ -577,7 +577,7 @@ const postsData = posts.map(p => ({
     .post-count {
       display: none;
     }
-    .nav-item {
+    .topbar-nav .nav-item {
       padding: 6px;
       min-width: 32px;
     }
