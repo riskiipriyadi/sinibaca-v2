@@ -154,7 +154,12 @@ const socials = [
     gap: 0.4rem;
   }
 
-  .nav-list { display: flex; flex-direction: column; gap: 0.25rem; }
+  .nav-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.25rem;
+    width: 100%;
+  }
   .nav-item {
     display: flex;
     align-items: center;
@@ -167,6 +172,8 @@ const socials = [
     transition: all 0.15s ease;
     position: relative;
     font-weight: 500;
+    width: 100%;
+    box-sizing: border-box;
   }
   .nav-item:hover {
     background: var(--hover, #f1f5f9);
