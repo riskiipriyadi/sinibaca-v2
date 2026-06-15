@@ -36,13 +36,19 @@ const postsData = posts.map(p => ({
     </div>
 
     <div class="topbar-nav">
-      <a href={`${base}/galeri`} class="nav-item nav-gallery">
-        <img src={`${base}/gallery-icon.png`} alt="Galeri" width="31" height="31" />
-        <span>Galeri</span>
-      </a>
-      <div class="post-count">
-        <span class="post-count-badge">{posts.length}</span>
-        <span class="post-count-pill">Tulisan</span>
+      <div class="header-actions-group">
+        <button id="theme-toggle" class="theme-toggle-header" aria-label="Toggle dark mode">
+          <img id="theme-icon" src={`${base}/icon-mode-gelap.png`} alt="" width="28" height="28" />
+          <span id="theme-text">Mode Gelap</span>
+        </button>
+        <a href={`${base}/galeri`} class="nav-item nav-gallery">
+          <img src={`${base}/gallery-icon.png`} alt="Galeri" width="31" height="31" />
+          <span>Galeri</span>
+        </a>
+        <div class="post-count">
+          <span class="post-count-badge">{posts.length}</span>
+          <span class="post-count-pill">Tulisan</span>
+        </div>
       </div>
     </div>
 
@@ -53,6 +59,36 @@ const postsData = posts.map(p => ({
 </header>
 
 <script>
+  // Dark mode toggle
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeIcon = document.getElementById("theme-icon");
+  const themeText = document.getElementById("theme-text");
+  const html = document.documentElement;
+  const base = window.location.pathname.startsWith("/sinibaca-v2") ? "/sinibaca-v2" : "";
+
+  function updateThemeButton(mode: string) {
+    if (mode === "dark") {
+      themeIcon?.setAttribute("src", `${base}/icon-mode-terang.png`);
+      if (themeText) themeText.textContent = "Mode Terang";
+    } else {
+      themeIcon?.setAttribute("src", `${base}/icon-mode-gelap.png`);
+      if (themeText) themeText.textContent = "Mode Gelap";
+    }
+  }
+
+  // Initialize button state based on current mode
+  const currentMode = html.getAttribute("data-mode") || "light";
+  updateThemeButton(currentMode);
+
+  themeToggle?.addEventListener("click", () => {
+    const isDark = html.getAttribute("data-mode") === "dark";
+    const newMode = isDark ? "light" : "dark";
+    html.setAttribute("data-mode", newMode);
+    localStorage.setItem("theme", newMode);
+    updateThemeButton(newMode);
+  });
+
+  // Menu toggle
   const toggle = document.getElementById("menu-toggle");
   const sidebar = document.querySelector(".sidebar-left");
   toggle?.addEventListener("click", () => {
@@ -401,70 +437,116 @@ const postsData = posts.map(p => ({
   .topbar-nav {
     display: flex;
     align-items: center;
-    gap: 50px;
     flex-shrink: 0;
   }
 
-  .topbar-nav .nav-item {
+  .header-actions-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 10px;
+    background: var(--card-bg, #ffffff);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    height: 40px;
+  }
+
+  .theme-toggle-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 1rem;
+    border: none;
+    border-right: 1px solid var(--border, #e2e8f0);
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    color: var(--text, #0f172a);
+    white-space: nowrap;
+    flex-shrink: 0;
+    height: 100%;
+  }
+  .theme-toggle-header:hover {
+    background: var(--bg-secondary, #f8fafc);
+  }
+  .theme-toggle-header img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .header-actions-group .nav-item {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    padding: 0 1rem;
+    border: none;
+    border-right: 1px solid var(--border, #e2e8f0);
+    border-radius: 0;
     text-decoration: none;
     color: var(--text, #0f172a);
     font-weight: 600;
     font-size: 0.875rem;
     transition: all 0.2s ease;
-    border: 1.5px solid transparent;
+    background: transparent;
     box-sizing: border-box;
+    height: 100%;
   }
 
-  .topbar-nav .nav-item:hover {
+  .header-actions-group .nav-item:hover {
     background: var(--bg-secondary, #f8fafc);
-    border-color: var(--border, #e2e8f0);
   }
 
   .nav-gallery svg {
     flex-shrink: 0;
   }
 
-  .post-count {
+  .header-actions-group .post-count {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 0;
     font-family: inherit;
     flex-shrink: 0;
+    height: 100%;
   }
   .post-count-badge {
     background: var(--accent, #6366f1);
     color: #fff;
     font-weight: 700;
     font-size: 0.8rem;
-    padding: 3px 8px;
-    border-radius: 6px;
+    padding: 0 0.75rem;
+    border-radius: 0;
+    border-right: 1px solid var(--border, #e2e8f0);
     line-height: 1;
-    box-shadow: 0 0 0 2px var(--bg, #ffffff);
-    transition: transform 0.2s ease;
+    box-shadow: none;
+    transition: background 0.2s ease;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
   .post-count-badge:hover {
-    transform: scale(1.05);
-  }
-  html[data-mode="dark"] .post-count-badge {
-    box-shadow: 0 0 0 2px var(--bg, #0a0a0a);
+    background: #5558e3;
   }
   .post-count-pill {
     background: #dc2626;
     color: #fff;
     font-weight: 600;
     font-size: 0.8rem;
-    padding: 5px 14px;
-    border-radius: 6px;
+    padding: 0 1rem;
+    border-radius: 0;
     line-height: 1;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    box-shadow: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .post-count-pill:hover {
+    background: #b91c1c;
   }
 
   .menu-toggle {
@@ -490,16 +572,30 @@ const postsData = posts.map(p => ({
       padding: 0 12px;
       gap: 8px;
     }
-    .topbar-nav {
-      gap: 8px;
+    .header-actions-group {
+      height: 36px;
     }
-    .topbar-nav .nav-item span {
+    .theme-toggle-header {
+      padding: 0 0.75rem;
+      font-size: 0.75rem;
+      gap: 6px;
+    }
+    .theme-toggle-header img {
+      width: 20px;
+      height: 20px;
+    }
+    .header-actions-group .nav-item span {
       display: none;
     }
-    .topbar-nav .nav-item {
-      padding: 8px;
+    .header-actions-group .nav-item {
+      padding: 0 0.5rem;
       min-width: 36px;
       justify-content: center;
+    }
+    .post-count-badge,
+    .post-count-pill {
+      padding: 0 0.6rem;
+      font-size: 0.75rem;
     }
     .search-bar {
       max-width: none;
@@ -526,16 +622,22 @@ const postsData = posts.map(p => ({
     .menu-toggle {
       display: flex;
     }
-    .post-count-pill {
+    .header-actions-group {
+      height: 34px;
+    }
+    .header-actions-group .post-count-pill {
       display: none;
     }
     .post-count-badge {
-      padding: 2px 6px;
+      padding: 0 0.5rem;
       font-size: 0.7rem;
     }
   }
 
   @media (max-width: 480px) {
+    .header-actions-group .theme-toggle-header {
+      display: none;
+    }
     .topbar {
       height: 56px;
     }
@@ -574,7 +676,7 @@ const postsData = posts.map(p => ({
     .topbar-nav {
       gap: 6px;
     }
-    .post-count {
+    .header-actions-group .post-count {
       display: none;
     }
     .topbar-nav .nav-item {
