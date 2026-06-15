@@ -36,9 +36,6 @@ const postsData = posts.map(p => ({
     </div>
 
     <div class="topbar-nav">
-      <button class="nav-item nav-search" id="nav-search-btn" aria-label="Cari tulisan">
-        <img src={`${base}/search-icon.png`} alt="Cari" width="31" height="31" />
-      </button>
       <a href={`${base}/galeri`} class="nav-item nav-gallery">
         <img src={`${base}/gallery-icon.png`} alt="Galeri" width="31" height="31" />
         <span>Galeri</span>
@@ -60,11 +57,6 @@ const postsData = posts.map(p => ({
   const sidebar = document.querySelector(".sidebar-left");
   toggle?.addEventListener("click", () => {
     sidebar?.classList.toggle("mobile-open");
-  });
-
-  const navSearchBtn = document.getElementById("nav-search-btn");
-  navSearchBtn?.addEventListener("click", () => {
-    searchInput?.focus();
   });
 
   const searchBar = document.querySelector(".search-bar");
