@@ -7,7 +7,9 @@ const sortedPosts = posts.sort(
   (a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
 );
 
-const recentPosts = sortedPosts.slice(0, 3);
+const postsPerPage = 3;
+const recentPosts = sortedPosts.slice(0, postsPerPage);
+const hasMorePosts = sortedPosts.length > postsPerPage;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
@@ -52,9 +54,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       })}
     </div>
 
-    <div class="pagination-wrap">
-      <a href={`${base}/page/2`} class="next-link">Next →</a>
-    </div>
+    {hasMorePosts && (
+      <div class="pagination-wrap">
+        <a href={`${base}/page/2`} class="next-link">Next →</a>
+      </div>
+    )}
   </div>
 </Layout>
 
