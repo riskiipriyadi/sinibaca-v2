@@ -1,10 +1,11 @@
 ---
 title: "Orang-orang yang Hidupnya Tidak Bisa Dikontrol karena Mereka Sudah Tahu Apa yang Benar-benar Penting"
-description: "Mengapa Sokrates dan Diogenes tidak bisa dikontrol oleh kekuasaan, ancaman, atau tawaran apapun? Karena mereka sudah memutuskan lebih dulu apa yang tidak akan mereka kompromikan."
+description: "Sokrates hidup di tengah Atena yang hiruk-pikuk tanpa harta; Diogenes tidur di tong tanpa status. Keduanya tidak peduli apakah orang lain marah, tertawa, atau menganggap mereka gila. Bukan karena mereka kebal terhadap tekanan sosial, tapi karena mereka sudah menemukan sesuatu yang lebih kokoh untuk dijadikan pegangan."
 pubDate: 2026-06-02
-thumbnail: "/sokrates-diogenes-thumbnail.png"
+updatedDate: 2026-06-07
 category: "Filsafat"
-tags: ["sokrates", "diogenes", "stoisisma", "infestasi", "kesehatan"]
+tags: ["sokrates", "diogenes", "stoisisma"]
+thumbnail: "/sokrates-diogenes-thumbnail.png"
 ---
 # Orang-orang yang Hidupnya Tidak Bisa Dikontrol karena Mereka Sudah Tahu Apa yang Benar-benar Penting
 

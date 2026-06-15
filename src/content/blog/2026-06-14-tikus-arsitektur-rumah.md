@@ -1,10 +1,11 @@
 ---
 title: "Tikus Tidak Masuk Rumah Karena Kotor, Ia Masuk Karena Arsitektur Rumahmu Mengundangnya"
 description: "Sebuah studi di Singapura mengukur faktor risiko serangan tikus di ratusan tempat pembuangan sampah pada kawasan hunian publik. Hasilnya mengejutkan bukan karena berkaitan dengan volume sampah, melainkan karena berkaitan dengan besi: penutup saluran yang rusak meningkatkan risikonya hingga 36,7 kali lipat."
-pubDate: 2026-06-14
-thumbnail: "/images/tikus-arsitektur-rumah.png"
+pubDate: 2026-06-10
+updatedDate: 2026-06-14
 category: "Arsitektur"
-tags: ["tikus", "arsitektur", "infestasi", "kesehatan"]
+tags: ["infestasi", "kesehatan", "tikus", "arsitektur"]
+thumbnail: "/images/tikus-arsitektur-rumah.png"
 ---
 # Tikus Tidak Masuk Rumah Karena Kotor, Ia Masuk Karena Arsitektur Rumahmu Mengundangnya
 

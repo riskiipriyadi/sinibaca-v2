@@ -1,6 +1,5 @@
 ---
 import { countReferences } from "../utils/countReferences";
-import { getLastModified, formatDateIndonesian } from "../utils/getLastModified";
 
 interface Props {
   post: {
@@ -10,6 +9,7 @@ interface Props {
       title: string;
       description?: string;
       pubDate: Date;
+      updatedDate?: Date;
       category?: string;
       tags?: string[];
       thumbnail?: string;
@@ -27,12 +27,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const refCount = countReferences(body || "");
 
-// Get git-based last modified date, falling back to pubDate
-const filePath = post.id ? `src/content/blog/${post.id}` : "";
-const lastModified = getLastModified(filePath, data.pubDate);
-const showUpdated = lastModified.getTime() !== data.pubDate.getTime();
-const rilisDate = formatDateIndonesian(data.pubDate);
-const updateDate = showUpdated ? formatDateIndonesian(lastModified) : "";
+function formatDateIndonesian(date: Date) {
+  return new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(date);
+}
 
 function getImageUrl(thumbnail?: string, heroImage?: string | { src: string }): string {
   const placeholder = `${base}/images/placeholder.jpg`;
@@ -50,6 +47,12 @@ const dateStr = data.pubDate.toLocaleDateString("id-ID", {
   day: "numeric", month: "short", year: "numeric",
 });
 
+const updatedDateStr = data.updatedDate ? data.updatedDate.toLocaleDateString("id-ID", {
+  day: "numeric", month: "short", year: "numeric",
+}) : null;
+
+const showUpdated = data.updatedDate && data.updatedDate.getTime() !== data.pubDate.getTime();
+
 const wordCount = (body || "").split(/\s+/).length;
 const readTime = Math.max(1, Math.ceil(wordCount / 200));
 ---
@@ -61,20 +64,28 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
   <div class="card-body">
     <div class="card-meta">
       <span class="category">{data.category || "Uncategorized"}</span>
-      {showUpdated && <span class="diperbarui-label">Diperbarui {updateDate}</span>}
-      <span class="dot">•</span>
-      <span class="date">{dateStr}</span>
+      {showUpdated && (
+        <span class="updated-pill">
+          <span class="updated-badge">Diperbarui</span>
+          <span class="updated-date">{updatedDateStr}</span>
+        </span>
+      )}
       <span class="dot">•</span>
       <span class="read-time">{readTime} min baca</span>
     </div>
     <h2 class="card-title">{data.title}</h2>
     <p class="card-excerpt">{data.description || ""}</p>
-    {refCount > 0 && (
-      <div class="ref-badge">
-        📚 {refCount} referensi
-      </div>
-    )}
-    <div class="rilis-label">Rilis {rilisDate}</div>
+    <div class="card-footer-row">
+      {refCount > 0 && (
+        <div class="ref-badge">
+          📚 {refCount} referensi
+        </div>
+      )}
+      <span class="rilis-pill">
+        <span class="rilis-badge">Rilis</span>
+        <span class="rilis-date">{dateStr}</span>
+      </span>
+    </div>
   </div>
 </a>
 
@@ -91,7 +102,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
     border-radius: 0;
     background: transparent;
     box-shadow: none;
-    overflow: hidden;
+    overflow: visible;
   }
   .post-card:hover {
     background: var(--bg-secondary);
@@ -118,7 +129,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
     display: flex;
     flex-direction: column;
     gap: 4px;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .card-meta {
@@ -131,10 +142,77 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
     flex-wrap: wrap;
   }
   .category {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
     font-weight: 600;
     color: var(--accent);
     text-transform: capitalize;
     flex-shrink: 0;
+    box-sizing: border-box;
+  }
+  .updated-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    border-radius: 999px;
+    overflow: hidden;
+    font-size: 0.72rem;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+  .updated-badge {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background: #dcfce7;
+    color: #166534;
+    font-weight: 700;
+    padding: 0 0.65rem;
+  }
+  .updated-date {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background: #15803d;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0 0.65rem;
+  }
+  .rilis-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    border-radius: 999px;
+    overflow: hidden;
+    font-size: 0.72rem;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+  .rilis-badge {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+    padding: 0 0.65rem;
+  }
+  .rilis-date {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0 0.65rem;
+  }
+  .card-footer-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 4px;
   }
   .dot {
     color: var(--text-light);
@@ -169,25 +247,13 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
   }
 
   .ref-badge {
-    font-size: 0.75rem;
-    color: var(--text-light);
-    margin-top: 4px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 4px;
-  }
-
-  .rilis-label {
-    font-size: 0.7rem;
-    color: var(--text-light, #94a3b8);
-    margin-top: 4px;
-  }
-
-  .diperbarui-label {
-    font-size: 0.7rem;
-    color: var(--accent, #6366f1);
-    font-weight: 500;
-    flex-shrink: 0;
+    height: 28px;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    box-sizing: border-box;
   }
 
   @media (max-width: 640px) {
