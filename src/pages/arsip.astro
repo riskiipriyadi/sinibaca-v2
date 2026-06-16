@@ -61,7 +61,7 @@ const monthKeys = [...new Set(posts.map(p => {
                   return (
                     <a
                       href={`${base}/blog/${slug}`}
-                      style="display:flex; flex-direction:column; gap:6px; padding:10px 12px; background:var(--card-bg); border:0.5px solid var(--border); border-radius:12px; margin-bottom:6px; text-decoration:none; cursor:pointer; transition:all 0.2s ease;"
+                      style="display:grid; grid-template-columns:95px 1fr; grid-template-rows:repeat(3,20px); gap:4px 10px; padding:10px 12px; background:var(--card-bg); border:0.5px solid var(--border); border-radius:12px; margin-bottom:6px; text-decoration:none; cursor:pointer; transition:all 0.2s ease;"
                       class="post-card-compact"
                       data-rilis={rilisDateStr}
                       data-diperbarui={diperbaruiDateStr}
@@ -69,32 +69,36 @@ const monthKeys = [...new Set(posts.map(p => {
                       data-title={p.data.title}
                       data-ref-count={refCount}
                     >
-                      {/* Row 1: Diperbarui + Title */}
-                      <div style="display:flex; align-items:center; gap:10px;">
-                        {diperbaruiDateStr && (
-                          <span style="display:inline-flex; align-items:center; gap:4px; height:20px; background:#dcfce7; color:#14532d; font-size:11px; font-weight:500; padding:0 8px; border-radius:999px; white-space:nowrap;">
-                            <img src={`${base}/icons/icons8-diperbarui.gif`} alt="diperbarui" width="16" height="16" style="width:16px;height:16px;object-fit:contain;display:inline-block;" />
-                            {diperbaruiDateStr}
-                          </span>
-                        )}
-                        <span style="font-size:0.97rem; color:var(--text); font-weight:700; line-height:1.4; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{p.data.title}</span>
+                      {/* Row 1 Col A: Category chip */}
+                      <span style="grid-row:1; align-self:center; display:inline-flex; align-items:center; gap:4px; height:20px; color:var(--accent); background:rgba(99,102,241,0.08); border:0.5px solid rgba(99,102,241,0.2); padding:0 8px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap;">
+                        <img src={`${base}/icons/icons8-diversity.gif`} alt="category" width="13" height="13" style="width:13px;height:13px;object-fit:contain;display:inline-block;" />
+                        {cat}
+                      </span>
+                      
+                      {/* Title wrapper: spans rows 1-3, column 2, uses float technique */}
+                      <div class="title-wrapper" style="grid-row:1/4; grid-column:2; height:60px; overflow:hidden; font-size:13px; font-weight:500; color:var(--text); line-height:20px; word-break:break-word; white-space:normal;">
+                        <div style="float:right; clear:right; height:40px; width:0;"></div>
+                        <span style="float:right; clear:right; display:inline-flex; align-items:center; gap:4px; height:20px; font-size:11px; font-weight:500; color:var(--text-muted); background:var(--bg-secondary); border:0.5px solid var(--border); padding:0 8px; border-radius:999px; white-space:nowrap; line-height:20px;">
+                          <img src={`${base}/icons/ref-icon.png`} alt="ref" width="13" height="13" style="width:13px;height:13px;object-fit:contain;display:inline-block;" />
+                          {refCount} referensi
+                        </span>
+                        {p.data.title}
                       </div>
                       
-                      {/* Row 2: Rilis + Category + Referensi */}
-                      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                        <span style="display:inline-flex; align-items:center; gap:4px; height:20px; background:#dbeafe; color:#1e3a8a; font-size:11px; font-weight:500; padding:0 8px; border-radius:999px; white-space:nowrap;">
-                          <img src={`${base}/icons/icons8-rilis.png`} alt="rilis" width="16" height="16" style="width:16px;height:16px;object-fit:contain;display:inline-block;" />
-                          {rilisDateStr}
+                      {/* Row 2 Col A: Diperbarui badge */}
+                      {diperbaruiDateStr && (
+                        <span style="grid-row:2; align-self:center; display:inline-flex; align-items:center; gap:4px; height:20px; background:#dcfce7; color:#14532d; font-size:11px; font-weight:500; padding:0 8px; border-radius:999px; border:0.5px solid #86efac; white-space:nowrap;">
+                          <img src={`${base}/icons/icons8-diperbarui.gif`} alt="diperbarui" width="14" height="14" style="width:14px;height:14px;object-fit:contain;display:inline-block;" />
+                          {diperbaruiDateStr}
                         </span>
-                        <span style="display:inline-flex; align-items:center; gap:4px; height:20px; color:var(--accent); background:rgba(99,102,241,0.08); padding:0 8px; border-radius:999px; font-size:11px; font-weight:700; white-space:nowrap;">
-                          <img src={`${base}/icons/icons8-diversity.gif`} alt="category" width="16" height="16" style="width:16px;height:16px;object-fit:contain;display:inline-block;" />
-                          {cat}
-                        </span>
-                        <div style="display:inline-flex; align-items:center; gap:4px; height:20px; font-size:11px; font-weight:600; color:var(--accent); background:rgba(99,102,241,0.06); padding:0 0.65rem; border-radius:6px;">
-                          <img src={`${base}/icons/ref-icon.png`} alt="ref" width="16" height="16" style="width:16px;height:16px;object-fit:contain;display:inline-block;" />
-                          {refCount} referensi
-                        </div>
-                      </div>
+                      )}
+                      
+                      {/* Row 3 Col A: Rilis badge */}
+                      <span style="grid-row:3; align-self:center; display:inline-flex; align-items:center; gap:4px; height:20px; background:#dbeafe; color:#1e3a8a; font-size:11px; font-weight:500; padding:0 8px; border-radius:999px; border:0.5px solid #93c5fd; white-space:nowrap;">
+                        <img src={`${base}/icons/icons8-rilis.png`} alt="rilis" width="14" height="14" style="width:14px;height:14px;object-fit:contain;display:inline-block;" />
+                        {rilisDateStr}
+                      </span>
+                      
                     </a>
                   );
             })}
