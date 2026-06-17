@@ -10,6 +10,6 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   site: 'https://riskipriyadi.github.io',
-  base: '/sinibaca-v2',
+  base: '/sinibaca/',
   output: 'static',
 });
